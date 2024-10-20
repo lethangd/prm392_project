@@ -1,0 +1,43 @@
+package com.example.englishkids.repository;
+
+
+import android.content.Context;
+import android.os.AsyncTask;
+
+import com.example.englishkids.dao.AppDatabase;
+import com.example.englishkids.dao.LessonDao;
+import com.example.englishkids.entity.Lesson;
+
+import java.util.List;
+
+public class LessonRepository {
+
+    private LessonDao lessonDao;
+
+    public LessonRepository(Context context) {
+        AppDatabase db = AppDatabase.getInstance(context);
+        lessonDao = db.lessonDao();
+    }
+
+    public List<Lesson> getAllLessons() {
+        return lessonDao.getAllLessons();
+    }
+
+    public void insertLesson(Lesson lesson) {
+        new InsertLessonAsyncTask(lessonDao).execute(lesson);
+    }
+
+    private static class InsertLessonAsyncTask extends AsyncTask<Lesson, Void, Void> {
+        private LessonDao lessonDao;
+
+        private InsertLessonAsyncTask(LessonDao lessonDao) {
+            this.lessonDao = lessonDao;
+        }
+
+        @Override
+        protected Void doInBackground(Lesson... lessons) {
+            lessonDao.insertLesson(lessons[0]);
+            return null;
+        }
+    }
+}

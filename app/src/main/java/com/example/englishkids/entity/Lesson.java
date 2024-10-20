@@ -1,0 +1,50 @@
+package com.example.englishkids.entity;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "Lesson")
+public class Lesson {
+    @PrimaryKey(autoGenerate = true)
+    public int lesson_id;
+
+    @ColumnInfo(name = "lesson_name")
+    public String lessonName;
+
+    @ColumnInfo(name = "description")
+    public String description;
+
+    @ColumnInfo(name = "lesson_type")
+    public String lessonType;
+
+    public Lesson(String lessonName, String description, String lessonType) {
+        this.lessonName = lessonName;
+        this.description = description;
+        this.lessonType = lessonType;
+    }
+
+    public String getLessonName() {
+        return lessonName;
+    }
+
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLessonType() {
+        return lessonType;
+    }
+
+    public void setLessonType(String lessonType) {
+        this.lessonType = lessonType;
+    }
+}
