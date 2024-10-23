@@ -29,6 +29,18 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
+
+        // Nếu đã đăng nhập, chuyển sang MainActivity
+        if (isLoggedIn) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return; // Ngăn không cho tiếp tục khởi tạo giao diện đăng nhập
+        }
+
         setContentView(R.layout.activity_login);
 
         etUsername = findViewById(R.id.etUsername);
@@ -37,8 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
 
         // Khởi tạo Room Database
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "user-database").build();
+        db = AppDatabase.getInstance(this);
         userDao = db.userDao();
         executorService = Executors.newSingleThreadExecutor();
 
@@ -84,6 +95,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

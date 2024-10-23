@@ -18,12 +18,15 @@ import com.example.englishkids.entity.Lesson;
 import com.example.englishkids.repository.LessonRepository;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class PracticeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private LessonAdapter lessonAdapter;
     private LessonRepository lessonRepository;
+    private ExecutorService executorService;
 
     @Nullable
     @Override
@@ -33,11 +36,17 @@ public class PracticeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         lessonRepository = new LessonRepository(getContext());
+        executorService = Executors.newSingleThreadExecutor();
 
-        // Fetch all previously learned lessons (for now, we're using all lessons)
-        List<Lesson> lessons = lessonRepository.getAllLessons();
-        lessonAdapter = new LessonAdapter(lessons);
-        recyclerView.setAdapter(lessonAdapter);
+        // Fetch all previously learned lessons in a background thread
+        executorService.execute(() -> {
+            List<Lesson> lessons = lessonRepository.getAllLessons();
+            // Update the RecyclerView on the main thread
+            getActivity().runOnUiThread(() -> {
+                lessonAdapter = new LessonAdapter(lessons, getContext());
+                recyclerView.setAdapter(lessonAdapter);
+            });
+        });
 
         return view;
     }

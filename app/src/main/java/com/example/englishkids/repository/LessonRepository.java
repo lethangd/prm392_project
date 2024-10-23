@@ -27,6 +27,10 @@ public class LessonRepository {
         new InsertLessonAsyncTask(lessonDao).execute(lesson);
     }
 
+    public Lesson getLessonById(int lessonId) {
+        return  lessonDao.getLessonById(lessonId);
+    }
+
     private static class InsertLessonAsyncTask extends AsyncTask<Lesson, Void, Void> {
         private LessonDao lessonDao;
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,12 +20,15 @@ import com.example.englishkids.repository.LessonRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private LessonAdapter lessonAdapter;
     private LessonRepository lessonRepository;
+    private ExecutorService executorService;
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -33,12 +37,22 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = view.findViewById(R.id.recyclerView_lessons);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        lessonRepository = new LessonRepository(getContext());
 
-        List<Lesson> lessons = lessonRepository.getAllLessons();
-        lessonAdapter = new LessonAdapter(lessons);
-        recyclerView.setAdapter(lessonAdapter);
+        lessonRepository = new LessonRepository(getContext());
+        executorService = Executors.newSingleThreadExecutor();
+
+        // Fetch lessons in a background thread
+        executorService.execute(() -> {
+            List<Lesson> lessons = lessonRepository.getAllLessons();
+
+            // Update the RecyclerView on the main thread
+            getActivity().runOnUiThread(() -> {
+                lessonAdapter = new LessonAdapter(lessons, getContext());
+                recyclerView.setAdapter(lessonAdapter);
+            });
+        });
 
         return view;
     }
 }
+

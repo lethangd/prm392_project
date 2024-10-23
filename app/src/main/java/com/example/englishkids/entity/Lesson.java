@@ -24,6 +24,14 @@ public class Lesson {
         this.lessonType = lessonType;
     }
 
+    public int getLesson_id() {
+        return lesson_id;
+    }
+
+    public void setLesson_id(int lesson_id) {
+        this.lesson_id = lesson_id;
+    }
+
     public String getLessonName() {
         return lessonName;
     }

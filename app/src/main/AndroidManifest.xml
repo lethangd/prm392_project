@@ -10,6 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:enableOnBackInvokedCallback="true"
         android:theme="@style/Theme.EnglishKids"
         tools:targetApi="31">
         <activity
@@ -21,11 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- Register Activity -->
         <activity android:name=".activities.RegisterActivity" />
-
-        <!-- Main Activity -->
+        <activity android:name=".activities.LessonDetailActivity" />
         <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.FlashcardActivity" />
+        <activity android:name=".activities.GrammarActivity" />
+
     </application>
 
 </manifest>

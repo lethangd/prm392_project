@@ -1,0 +1,47 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Image -->
+    <ImageView
+        android:id="@+id/img_word_image"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_image_placeholder" />
+
+    <!-- Meaning of the word -->
+    <TextView
+        android:id="@+id/txt_meaning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Meaning"
+        android:textSize="18sp"
+        android:paddingTop="16dp" />
+
+    <!-- EditText for user to enter the word -->
+    <EditText
+        android:id="@+id/et_word_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter the word" />
+
+    <!-- Button to check the answer -->
+    <Button
+        android:id="@+id/btn_check_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check Answer"
+        android:layout_gravity="center"
+        android:paddingTop="16dp" />
+
+    <!-- TextView for showing feedback -->
+    <TextView
+        android:id="@+id/txt_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:paddingTop="16dp" />
+</LinearLayout>

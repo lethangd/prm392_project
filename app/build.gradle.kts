@@ -39,8 +39,11 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.room.common)
     implementation(libs.room.runtime)
-    annotationProcessor(libs.room.compiler) // Sử dụng annotationProcessor cho Room
+    implementation(libs.recyclerview)
+    annotationProcessor(libs.room.compiler)
     implementation(libs.firebase.firestore)
+    implementation("com.github.bumptech.glide:glide:4.15.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

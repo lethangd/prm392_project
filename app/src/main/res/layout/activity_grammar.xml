@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".activities.GrammarActivity">
+
+    <!-- Instruction Text -->
+    <TextView
+        android:id="@+id/txtInstruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Arrange the words to form a sentence"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:padding="8dp" />
+
+    <!-- Display Area for Sentence Assembly -->
+    <LinearLayout
+        android:id="@+id/layoutSentence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center" />
+
+    <!-- Options for Word Arrangement -->
+    <GridLayout
+        android:id="@+id/gridOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:padding="8dp"
+        android:layout_marginTop="20dp">
+        <!-- Buttons will be dynamically added -->
+    </GridLayout>
+
+    <!-- Feedback Message -->
+    <TextView
+        android:id="@+id/txtFeedbackGrammar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="20sp"
+        android:padding="8dp"
+        android:textColor="@android:color/holo_green_dark"
+        android:layout_gravity="center" />
+
+</LinearLayout>

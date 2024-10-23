@@ -9,8 +9,7 @@ public class Grammar {
     @PrimaryKey(autoGenerate = true)
     public int grammar_id;
 
-    @ColumnInfo(name = "exercise")
-    public String exercise;
+    private int grammarTypeId;
 
     @ColumnInfo(name = "correct_sentence")
     public String correctSentence;
@@ -18,18 +17,18 @@ public class Grammar {
     @ColumnInfo(name = "lesson_id")
     public int lessonId;
 
-    public Grammar(String exercise, String correctSentence, int lessonId) {
-        this.exercise = exercise;
+    public Grammar(int grammarTypeId, String correctSentence, int lessonId) {
+        this.grammarTypeId = grammarTypeId;
         this.correctSentence = correctSentence;
         this.lessonId = lessonId;
     }
 
-    public String getExercise() {
-        return exercise;
+    public int getGrammarTypeId() {
+        return grammarTypeId;
     }
 
-    public void setExercise(String exercise) {
-        this.exercise = exercise;
+    public void setGrammarTypeId(int grammarTypeId) {
+        this.grammarTypeId = grammarTypeId;
     }
 
     public String getCorrectSentence() {

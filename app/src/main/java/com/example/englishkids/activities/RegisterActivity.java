@@ -32,8 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegisterUser = findViewById(R.id.btnRegisterUser);
 
         // Khởi tạo Room Database
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "user-database").build();
+        AppDatabase db = AppDatabase.getInstance(this);
         userDao = db.userDao();
         executorService = Executors.newSingleThreadExecutor();
 
