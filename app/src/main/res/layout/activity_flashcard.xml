@@ -7,52 +7,59 @@
     android:padding="16dp"
     tools:context=".activities.FlashcardActivity">
 
-    <!-- Image for Vocabulary -->
+
     <ImageView
-        android:id="@+id/imgWord"
+        android:id="@+id/img_word_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:contentDescription="Word Image"
+        android:contentDescription="Hình ảnh từ vựng"
         android:scaleType="centerCrop" />
 
-    <!-- Word Text -->
     <TextView
-        android:id="@+id/txtWord"
+        android:id="@+id/txt_meaning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Word"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:padding="8dp" />
-
-    <!-- First Option -->
-    <Button
-        android:id="@+id/btnOption1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Option 1"
+        android:text="Nghĩa"
         android:textSize="18sp"
         android:padding="16dp" />
-
-    <!-- Second Option -->
-    <Button
-        android:id="@+id/btnOption2"
+    <EditText
+        android:id="@+id/et_word_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Option 2"
-        android:textSize="18sp"
-        android:padding="16dp" />
-
-    <!-- Feedback Message -->
+        android:hint="Điền từ" android:padding="16dp"  />
+    <Button
+        android:id="@+id/btn_check_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kiểm tra"
+        android:layout_gravity="center" />
     <TextView
-        android:id="@+id/txtFeedback"
+        android:id="@+id/txt_feedback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="20sp"
-        android:padding="8dp"
-        android:textColor="@android:color/holo_green_dark"
-        android:layout_gravity="center" />
+        android:textSize="16sp"
+        android:paddingTop="8dp"
+        android:textColor="@android:color/holo_green_dark" />
+
+
+
+
+    <LinearLayout
+        android:id="@+id/layout_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingTop="8dp"/>
+
+    <!-- Nút tiếp theo -->
+    <Button
+        android:id="@+id/btn_next_flashcard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tiếp theo"
+        android:layout_gravity="center"
+        android:paddingTop="16dp" />
 
 </LinearLayout>

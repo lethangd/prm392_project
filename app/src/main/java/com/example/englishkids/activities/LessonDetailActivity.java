@@ -51,9 +51,7 @@ public class LessonDetailActivity extends AppCompatActivity {
     }
 
     private void loadLessonDetails(int lessonId) {
-        // Run database query on background thread
         executorService.execute(() -> {
-            // Lấy chi tiết bài học, danh sách từ vựng và ngữ pháp của bài học
             List<Vocabulary> vocabList = vocabularyRepository.getVocabularyByLessonId(lessonId);
             List<Grammar> grammarList = grammarRepository.getGrammarByLessonId(lessonId);
 
@@ -62,7 +60,6 @@ public class LessonDetailActivity extends AppCompatActivity {
                     vocabularyAdapter = new VocabularyAdapter(vocabList);
                     vocabRecyclerView.setAdapter(vocabularyAdapter);
                 }
-
                 if (!grammarList.isEmpty()) {
                     grammarAdapter = new GrammarAdapter(grammarList);
                     grammarRecyclerView.setAdapter(grammarAdapter);
@@ -70,4 +67,5 @@ public class LessonDetailActivity extends AppCompatActivity {
             });
         });
     }
+
 }

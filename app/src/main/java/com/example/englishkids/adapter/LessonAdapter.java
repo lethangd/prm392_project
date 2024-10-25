@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.englishkids.R;
-import com.example.englishkids.activities.LessonDetailActivity;
+import com.example.englishkids.activities.FlashcardActivity;
 import com.example.englishkids.entity.Lesson;
 
 import java.util.List;
@@ -37,18 +37,17 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
 
     @Override
     public void onBindViewHolder(@NonNull LessonViewHolder holder, int position) {
-        // Bind data to the view holder
         Lesson lesson = lessonList.get(position);
         holder.lessonTitle.setText(lesson.getLessonName());
 
-        // Set click listener for the "Start" button
+        // Set sự kiện click cho nút "Start"
         holder.startButton.setOnClickListener(v -> {
-            // Open LessonDetailActivity and pass the selected lesson's ID
-            Intent intent = new Intent(context, LessonDetailActivity.class);
-            intent.putExtra("lesson_id", lesson.getLesson_id());
+            Intent intent = new Intent(context, FlashcardActivity.class);
+            intent.putExtra("lesson_id", lesson.getLesson_id()); // Truyền lesson_id vào FlashcardActivity
             context.startActivity(intent);
         });
     }
+
 
     @Override
     public int getItemCount() {
