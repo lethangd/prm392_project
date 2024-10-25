@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "525618816140",
+    "project_id": "prm392-6afaa",
+    "storage_bucket": "prm392-6afaa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525618816140:android:7cc120b477709a140207a9",
+        "android_client_info": {
+          "package_name": "com.example.englishkids"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlAZ9BIG7gEnIri8t_dc8tinjn4E-xwM0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

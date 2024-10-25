@@ -1,57 +1,68 @@
 package com.example.englishkids.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import com.example.englishkids.R;
-import com.example.englishkids.dao.AppDatabase;
-import com.example.englishkids.dao.UserDao;
-import com.example.englishkids.entity.User;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etRegisterUsername, etRegisterPassword;
+    private EditText etEmail, etPassword;
     private Button btnRegisterUser;
-    private UserDao userDao;
-    private ExecutorService executorService;
+    private FirebaseAuth firebaseAuth;  // Firebase Auth instance
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        etRegisterUsername = findViewById(R.id.etRegisterUsername);
-        etRegisterPassword = findViewById(R.id.etRegisterPassword);
+        // Khởi tạo Firebase Auth
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        // Ánh xạ các view
+        etEmail = findViewById(R.id.etRegisterUsername);
+        etPassword = findViewById(R.id.etRegisterPassword);
         btnRegisterUser = findViewById(R.id.btnRegisterUser);
 
-        // Khởi tạo Room Database
-        AppDatabase db = AppDatabase.getInstance(this);
-        userDao = db.userDao();
-        executorService = Executors.newSingleThreadExecutor();
-
-        // Xử lý đăng ký
+        // Xử lý sự kiện đăng ký
         btnRegisterUser.setOnClickListener(view -> {
-            String username = etRegisterUsername.getText().toString();
-            String password = etRegisterPassword.getText().toString();
-            register(username, password);
+            String email = etEmail.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
+
+            if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+                Toast.makeText(RegisterActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+            } else if (password.length() < 6) {
+                Toast.makeText(RegisterActivity.this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+            } else {
+                registerUser(email, password);
+            }
         });
     }
 
-    private void register(String username, String password) {
-        executorService.execute(() -> {
-            User newUser = new User(username, password);
-            userDao.insertUser(newUser);
-            runOnUiThread(() -> {
-                Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                finish(); // Quay lại màn hình login
-            });
-        });
+    private void registerUser(String email, String password) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                            // Quay lại màn hình Login
+                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }
