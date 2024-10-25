@@ -7,7 +7,6 @@
     android:padding="16dp"
     tools:context=".activities.FlashcardActivity">
 
-
     <ImageView
         android:id="@+id/img_word_image"
         android:layout_width="match_parent"
@@ -22,17 +21,20 @@
         android:text="Nghĩa"
         android:textSize="18sp"
         android:padding="16dp" />
+
     <EditText
         android:id="@+id/et_word_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Điền từ" android:padding="16dp"  />
+        android:hint="Điền từ" android:padding="16dp" />
+
     <Button
         android:id="@+id/btn_check_answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Kiểm tra"
         android:layout_gravity="center" />
+
     <TextView
         android:id="@+id/txt_feedback"
         android:layout_width="wrap_content"
@@ -42,9 +44,20 @@
         android:paddingTop="8dp"
         android:textColor="@android:color/holo_green_dark" />
 
+    <!-- Khu vực hiển thị câu ghép -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
+        <LinearLayout
+            android:id="@+id/layout_sentence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
 
-
+    <!-- Khu vực lựa chọn từ để ghép -->
     <LinearLayout
         android:id="@+id/layout_options"
         android:layout_width="match_parent"
@@ -52,6 +65,15 @@
         android:orientation="vertical"
         android:gravity="center"
         android:paddingTop="8dp"/>
+
+    <!-- Nút Xóa Từ Cuối -->
+    <Button
+        android:id="@+id/btn_undo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Xóa Từ Cuối"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
     <!-- Nút tiếp theo -->
     <Button

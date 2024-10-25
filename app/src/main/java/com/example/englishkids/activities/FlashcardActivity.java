@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,40 +30,43 @@ public class FlashcardActivity extends AppCompatActivity {
     private TextView txtMeaning, txtFeedback;
     private EditText etWordInput;
     private ImageView imgWordImage;
-    private Button btnCheckAnswer, btnNextFlashcard;
-    private LinearLayout layoutOptions; // Layout chứa các từ trong bài tập ghép ngữ pháp
-    private int currentVocabIndex = 0;
+    private Button btnCheckAnswer, btnNextFlashcard, btnUndo;
+    private LinearLayout layoutOptions, layoutSentence;
+    private List<String> userSentence = new ArrayList<>();
     private List<Vocabulary> vocabularyList;
     private List<Grammar> grammarList;
-    private boolean isVocabularyMode = true; // Chuyển giữa chế độ từ vựng và ngữ pháp
-    private ExecutorService executorService; // Để chạy tác vụ trên background thread
+    private boolean isVocabularyMode = true;
+    private int currentVocabIndex = 0;
+    private ExecutorService executorService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard);
 
+        // Initialize ExecutorService
         executorService = Executors.newSingleThreadExecutor();
 
-        // Khởi tạo các View
+        // Initialize Views
         txtMeaning = findViewById(R.id.txt_meaning);
         etWordInput = findViewById(R.id.et_word_input);
         imgWordImage = findViewById(R.id.img_word_image);
         txtFeedback = findViewById(R.id.txt_feedback);
         btnCheckAnswer = findViewById(R.id.btn_check_answer);
         btnNextFlashcard = findViewById(R.id.btn_next_flashcard);
+        btnUndo = findViewById(R.id.btn_undo);
         layoutOptions = findViewById(R.id.layout_options);
+        layoutSentence = findViewById(R.id.layout_sentence);
 
-        // Sự kiện kiểm tra đáp án
         btnCheckAnswer.setOnClickListener(v -> checkAnswer());
         btnNextFlashcard.setOnClickListener(v -> loadNextFlashcard());
+        btnUndo.setOnClickListener(v -> undoLastWord());
 
         int lessonId = getIntent().getIntExtra("lesson_id", -1);
-        loadLessonData(lessonId); // Gọi sau khi các View được khởi tạo
+        loadLessonData(lessonId);
     }
 
     private void loadLessonData(int lessonId) {
-        // Thực hiện truy vấn dữ liệu trong background thread
         executorService.execute(() -> {
             VocabularyRepository vocabularyRepository = new VocabularyRepository(this);
             GrammarRepository grammarRepository = new GrammarRepository(this);
@@ -72,19 +74,24 @@ public class FlashcardActivity extends AppCompatActivity {
             vocabularyList = vocabularyRepository.getVocabularyByLessonId(lessonId);
             grammarList = grammarRepository.getGrammarByLessonId(lessonId);
 
-            runOnUiThread(this::loadVocabularyFlashcard); // Sau khi có dữ liệu, bắt đầu với từ vựng
+            runOnUiThread(this::loadVocabularyFlashcard);
         });
     }
 
     private void loadVocabularyFlashcard() {
+        // Kiểm tra chế độ từ vựng
         if (currentVocabIndex < vocabularyList.size()) {
             Vocabulary vocab = vocabularyList.get(currentVocabIndex);
             txtMeaning.setText(vocab.getMeaning());
             etWordInput.setText("");
             txtFeedback.setText("");
-            layoutOptions.setVisibility(View.GONE); // Ẩn layout ghép từ cho phần từ vựng
+
+            // Chỉ hiển thị các thành phần liên quan đến từ vựng
+            layoutOptions.setVisibility(View.GONE);
+            layoutSentence.setVisibility(View.GONE);
             etWordInput.setVisibility(View.VISIBLE);
             btnCheckAnswer.setVisibility(View.VISIBLE);
+            btnUndo.setVisibility(View.GONE);
 
             // Hiển thị ảnh từ nếu có
             if (vocab.getImagePath() != null && !vocab.getImagePath().isEmpty()) {
@@ -93,7 +100,7 @@ public class FlashcardActivity extends AppCompatActivity {
                 imgWordImage.setImageResource(R.drawable.ic_image_placeholder);
             }
         } else {
-            // Chuyển sang ngữ pháp nếu đã hết từ vựng
+            // Chuyển sang chế độ ngữ pháp nếu hết từ vựng
             isVocabularyMode = false;
             currentVocabIndex = 0;
             loadGrammarFlashcard();
@@ -105,16 +112,21 @@ public class FlashcardActivity extends AppCompatActivity {
             Grammar grammar = grammarList.get(currentVocabIndex);
             txtMeaning.setText("Sắp xếp câu: ");
             txtFeedback.setText("");
-            layoutOptions.setVisibility(View.VISIBLE); // Hiển thị layout ghép từ
+            layoutSentence.removeAllViews();
+            userSentence.clear();
+
+            // Chỉ hiển thị các thành phần liên quan đến ngữ pháp
+            layoutOptions.setVisibility(View.VISIBLE);
+            layoutSentence.setVisibility(View.VISIBLE);
             etWordInput.setVisibility(View.GONE);
             btnCheckAnswer.setVisibility(View.GONE);
 
-            // Hiển thị các từ trong câu ngữ pháp
             displayGrammarOptions(grammar.getCorrectSentence());
         } else {
             txtMeaning.setText("Hoàn thành bài học!");
             txtFeedback.setText("Chúc mừng, bạn đã hoàn thành!");
             layoutOptions.setVisibility(View.GONE);
+            layoutSentence.setVisibility(View.GONE);
             btnCheckAnswer.setVisibility(View.GONE);
             etWordInput.setVisibility(View.GONE);
             btnNextFlashcard.setVisibility(View.GONE);
@@ -122,9 +134,8 @@ public class FlashcardActivity extends AppCompatActivity {
     }
 
     private void displayGrammarOptions(String sentence) {
-        // Tách các từ và trộn chúng để làm câu đố
         List<String> words = new ArrayList<>(Arrays.asList(sentence.split(" ")));
-        Collections.shuffle(words); // Trộn các từ
+        Collections.shuffle(words);
 
         layoutOptions.removeAllViews();
         for (String word : words) {
@@ -136,33 +147,77 @@ public class FlashcardActivity extends AppCompatActivity {
     }
 
     private void onWordSelected(Button button, String word) {
-        // Xử lý khi người dùng chọn từ trong phần ngữ pháp
-        if (txtFeedback.getText().toString().isEmpty()) {
-            txtFeedback.setText(word);
-        } else {
-            txtFeedback.append(" " + word);
-        }
+        userSentence.add(word);
+
+        TextView wordView = new TextView(this);
+        wordView.setText(word);
+        wordView.setPadding(8, 8, 8, 8);
+        layoutSentence.addView(wordView);
+
         button.setEnabled(false);
+        btnUndo.setVisibility(View.VISIBLE);
+
+        if (userSentence.size() == layoutOptions.getChildCount()) {
+            checkAnswer(); // Gọi hàm kiểm tra ngay khi người dùng hoàn thành sắp xếp
+        }
+    }
+
+    private void undoLastWord() {
+        if (!userSentence.isEmpty()) {
+            String lastWord = userSentence.remove(userSentence.size() - 1);
+
+            if (layoutSentence.getChildCount() > 0) {
+                layoutSentence.removeViewAt(layoutSentence.getChildCount() - 1);
+            }
+
+            for (int i = 0; i < layoutOptions.getChildCount(); i++) {
+                Button wordButton = (Button) layoutOptions.getChildAt(i);
+                if (wordButton.getText().equals(lastWord)) {
+                    wordButton.setEnabled(true);
+                    break;
+                }
+            }
+
+            if (userSentence.isEmpty()) {
+                btnUndo.setVisibility(View.GONE);
+            }
+        }
     }
 
     private void checkAnswer() {
-        String userInput = etWordInput.getText().toString().trim();
-        Vocabulary currentVocab = vocabularyList.get(currentVocabIndex);
+        if (isVocabularyMode) {
+            String userInput = etWordInput.getText().toString().trim();
+            Vocabulary currentVocab = vocabularyList.get(currentVocabIndex);
 
-        if (userInput.equalsIgnoreCase(currentVocab.getWord())) {
-            txtFeedback.setText("Chính xác!");
-            txtFeedback.setTextColor(Color.GREEN);
-            btnNextFlashcard.setVisibility(View.VISIBLE); // Hiện nút Tiếp theo khi đúng
+            if (userInput.equalsIgnoreCase(currentVocab.getWord())) {
+                txtFeedback.setText("Chính xác!");
+                txtFeedback.setTextColor(Color.GREEN);
+                btnNextFlashcard.setVisibility(View.VISIBLE);
+            } else {
+                txtFeedback.setText("Sai rồi, thử lại!");
+                txtFeedback.setTextColor(Color.RED);
+            }
         } else {
-            txtFeedback.setText("Sai rồi, thử lại!");
-            txtFeedback.setTextColor(Color.RED);
+            Grammar currentGrammar = grammarList.get(currentVocabIndex);
+            String correctSentence = currentGrammar.getCorrectSentence();
+            String userSentenceStr = String.join(" ", userSentence);
+
+            if (userSentenceStr.equalsIgnoreCase(correctSentence)) {
+                txtFeedback.setText("Chính xác!");
+                txtFeedback.setTextColor(Color.GREEN);
+                btnNextFlashcard.setVisibility(View.VISIBLE);
+            } else {
+                txtFeedback.setText("Sai rồi, thử lại!");
+                txtFeedback.setTextColor(Color.RED);
+            }
         }
     }
 
     private void loadNextFlashcard() {
         currentVocabIndex++;
-        txtFeedback.setText(""); // Xóa phản hồi
-        btnNextFlashcard.setVisibility(View.GONE); // Ẩn nút Tiếp theo
+        txtFeedback.setText("");
+        btnNextFlashcard.setVisibility(View.GONE);
+        btnUndo.setVisibility(View.GONE);
 
         if (isVocabularyMode) {
             loadVocabularyFlashcard();
