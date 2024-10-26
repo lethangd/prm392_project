@@ -19,22 +19,20 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
     private Button btnRegisterUser;
-    private FirebaseAuth firebaseAuth;  // Firebase Auth instance
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // Khởi tạo Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // Ánh xạ các view
-        etEmail = findViewById(R.id.etRegisterUsername);
-        etPassword = findViewById(R.id.etRegisterPassword);
-        btnRegisterUser = findViewById(R.id.btnRegisterUser);
+        bindingView();
+        bindingAction();
+    }
 
-        // Xử lý sự kiện đăng ký
+    private void bindingAction() {
         btnRegisterUser.setOnClickListener(view -> {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
@@ -49,6 +47,12 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    private void bindingView() {
+        etEmail = findViewById(R.id.etRegisterUsername);
+        etPassword = findViewById(R.id.etRegisterPassword);
+        btnRegisterUser = findViewById(R.id.btnRegisterUser);
+    }
+
     private void registerUser(String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -56,7 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                            // Quay lại màn hình Login
                             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                             finish();
                         } else {

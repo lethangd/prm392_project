@@ -32,7 +32,7 @@ public class FlashcardActivity extends AppCompatActivity {
     private ImageView imgWordImage;
     private Button btnCheckAnswer, btnNextFlashcard, btnUndo;
     private LinearLayout layoutOptions, layoutSentence;
-    private List<String> userSentence = new ArrayList<>();
+    private final List<String> userSentence = new ArrayList<>();
     private List<Vocabulary> vocabularyList;
     private List<Grammar> grammarList;
     private boolean isVocabularyMode = true;
@@ -46,8 +46,19 @@ public class FlashcardActivity extends AppCompatActivity {
 
         // Initialize ExecutorService
         executorService = Executors.newSingleThreadExecutor();
+        int lessonId = getIntent().getIntExtra("lesson_id", -1);
+        loadLessonData(lessonId);
+        bindingView();
+        bindingAction();
+    }
 
-        // Initialize Views
+    private void bindingAction() {
+        btnCheckAnswer.setOnClickListener(v -> checkAnswer());
+        btnNextFlashcard.setOnClickListener(v -> loadNextFlashcard());
+        btnUndo.setOnClickListener(v -> undoLastWord());
+    }
+
+    private void bindingView() {
         txtMeaning = findViewById(R.id.txt_meaning);
         etWordInput = findViewById(R.id.et_word_input);
         imgWordImage = findViewById(R.id.img_word_image);
@@ -57,13 +68,6 @@ public class FlashcardActivity extends AppCompatActivity {
         btnUndo = findViewById(R.id.btn_undo);
         layoutOptions = findViewById(R.id.layout_options);
         layoutSentence = findViewById(R.id.layout_sentence);
-
-        btnCheckAnswer.setOnClickListener(v -> checkAnswer());
-        btnNextFlashcard.setOnClickListener(v -> loadNextFlashcard());
-        btnUndo.setOnClickListener(v -> undoLastWord());
-
-        int lessonId = getIntent().getIntExtra("lesson_id", -1);
-        loadLessonData(lessonId);
     }
 
     private void loadLessonData(int lessonId) {

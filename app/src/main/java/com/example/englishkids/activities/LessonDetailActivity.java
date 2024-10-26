@@ -33,10 +33,6 @@ public class LessonDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson_detail);
 
-        tvLessonName = findViewById(R.id.tvLessonName);
-        vocabRecyclerView = findViewById(R.id.vocabRecyclerView);
-        grammarRecyclerView = findViewById(R.id.grammarRecyclerView);
-
         vocabRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         grammarRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -48,6 +44,17 @@ public class LessonDetailActivity extends AppCompatActivity {
         // Get lesson ID from intent
         int lessonId = getIntent().getIntExtra("lesson_id", -1);
         loadLessonDetails(lessonId);  // Fetch lesson details
+        bindingView();
+        bindingAction();
+    }
+
+    private void bindingAction() {
+    }
+
+    private void bindingView() {
+        tvLessonName = findViewById(R.id.tvLessonName);
+        vocabRecyclerView = findViewById(R.id.vocabRecyclerView);
+        grammarRecyclerView = findViewById(R.id.grammarRecyclerView);
     }
 
     private void loadLessonDetails(int lessonId) {
