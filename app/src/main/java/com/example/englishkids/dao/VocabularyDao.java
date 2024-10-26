@@ -22,4 +22,7 @@ public interface VocabularyDao {
 
     @Query("SELECT * FROM Vocabulary WHERE lesson_id = :lessonId")
     List<Vocabulary> getVocabularyByLessonId(int lessonId);
+
+    @Query("SELECT * FROM Vocabulary WHERE isLearned = 0 AND lesson_id = :lessonId")
+    List<Vocabulary> getUnlearnedVocabulary(int lessonId);
 }

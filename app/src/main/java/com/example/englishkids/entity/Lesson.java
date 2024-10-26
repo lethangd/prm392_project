@@ -2,6 +2,7 @@ package com.example.englishkids.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Lesson")
@@ -18,6 +19,9 @@ public class Lesson {
     @ColumnInfo(name = "lesson_type")
     public String lessonType;
 
+    @Ignore
+    private int progress;
+
     public Lesson(String lessonName, String description, String lessonType) {
         this.lessonName = lessonName;
         this.description = description;
@@ -26,6 +30,14 @@ public class Lesson {
 
     public int getLesson_id() {
         return lesson_id;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 
     public void setLesson_id(int lesson_id) {

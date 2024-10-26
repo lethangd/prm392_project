@@ -30,8 +30,8 @@ public class GrammarRepository {
     public List<Grammar> getGrammarByLessonId(int lessonId) {
         return grammarDao.getGrammarByLessonId(lessonId);
     }
-    public List<Grammar> getUnlearnedVocabulary() {
-        return  grammarDao.getUnlearnedGrammar();
+    public List<Grammar> getUnlearnedGrammar(int lessonId) {
+        return  grammarDao.getUnlearnedGrammar(lessonId);
     }
     private static class InsertGrammarAsyncTask extends AsyncTask<Grammar, Void, Void> {
         private GrammarDao grammarDao;

@@ -32,10 +32,6 @@ public class LessonRepository {
         return  lessonDao.getLessonById(lessonId);
     }
 
-    public List<Vocabulary> getUnlearnedVocabulary() {
-        return  lessonDao.getUnlearnedVocabulary();
-    }
-
     private static class InsertLessonAsyncTask extends AsyncTask<Lesson, Void, Void> {
         private LessonDao lessonDao;
 

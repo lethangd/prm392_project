@@ -75,8 +75,8 @@ public class FlashcardActivity extends AppCompatActivity {
             VocabularyRepository vocabularyRepository = new VocabularyRepository(this);
             GrammarRepository grammarRepository = new GrammarRepository(this);
 
-            vocabularyList = vocabularyRepository.getVocabularyByLessonId(lessonId);
-            grammarList = grammarRepository.getGrammarByLessonId(lessonId);
+            vocabularyList = vocabularyRepository.getUnlearnedVocabulary(lessonId);
+            grammarList = grammarRepository.getUnlearnedGrammar(lessonId);
 
             runOnUiThread(this::loadVocabularyFlashcard);
         });

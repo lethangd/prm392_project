@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,11 +40,39 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
     public void onBindViewHolder(@NonNull LessonViewHolder holder, int position) {
         Lesson lesson = lessonList.get(position);
         holder.lessonTitle.setText(lesson.getLessonName());
-
-        // Set sự kiện click cho nút "Start"
+        int progress = lesson.getProgress();
+        if (progress == 0) {
+            holder.startButton.setText("Bắt đầu");
+        } else {
+            holder.startButton.setText("Tiếp tục");
+        }
+        if (position > 0 && lessonList.get(position - 1).getProgress() == 0) {
+            holder.startButton.setEnabled(false);
+            holder.startButton.setAlpha(0.5f); // Visually indicate disabled state
+        } else {
+            holder.startButton.setEnabled(true);
+            holder.startButton.setAlpha(1.0f); // Reset visual indication
+        }
+        if (progress >= 67) {
+            holder.star1.setImageResource(R.drawable.ic_star_filled);
+            holder.star2.setImageResource(R.drawable.ic_star_filled);
+            holder.star3.setImageResource(R.drawable.ic_star_filled);
+        } else if (progress >= 34) {
+            holder.star1.setImageResource(R.drawable.ic_star_filled);
+            holder.star2.setImageResource(R.drawable.ic_star_filled);
+            holder.star3.setImageResource(R.drawable.ic_star_empty);
+        } else if (progress > 0) {
+            holder.star1.setImageResource(R.drawable.ic_star_filled);
+            holder.star2.setImageResource(R.drawable.ic_star_empty);
+            holder.star3.setImageResource(R.drawable.ic_star_empty);
+        }else{
+            holder.star1.setImageResource(R.drawable.ic_star_empty);
+            holder.star2.setImageResource(R.drawable.ic_star_empty);
+            holder.star3.setImageResource(R.drawable.ic_star_empty);
+        }
         holder.startButton.setOnClickListener(v -> {
             Intent intent = new Intent(context, FlashcardActivity.class);
-            intent.putExtra("lesson_id", lesson.getLesson_id()); // Truyền lesson_id vào FlashcardActivity
+            intent.putExtra("lesson_id", lesson.getLesson_id());
             context.startActivity(intent);
         });
     }
@@ -59,12 +88,16 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
     public static class LessonViewHolder extends RecyclerView.ViewHolder {
         TextView lessonTitle;
         Button startButton;
+        ImageView star1, star2, star3;
 
         public LessonViewHolder(@NonNull View itemView) {
             super(itemView);
             // Initialize the views
             lessonTitle = itemView.findViewById(R.id.lessonTitle);
             startButton = itemView.findViewById(R.id.startButton);
+            star1 = itemView.findViewById(R.id.star1); // Update these IDs as needed
+            star2 = itemView.findViewById(R.id.star2);
+            star3 = itemView.findViewById(R.id.star3);
         }
     }
 }

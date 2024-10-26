@@ -29,6 +29,10 @@ public class VocabularyRepository {
         return vocabularyDao.getVocabularyByLessonId(lessonId);
     }
 
+    public List<Vocabulary> getUnlearnedVocabulary(int lessonId) {
+        return  vocabularyDao.getUnlearnedVocabulary(lessonId);
+    }
+
     private static class InsertVocabularyAsyncTask extends AsyncTask<Vocabulary, Void, Void> {
         private VocabularyDao vocabularyDao;
 
