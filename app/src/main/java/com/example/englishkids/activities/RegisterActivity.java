@@ -26,15 +26,13 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // Khởi tạo Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // Ánh xạ các view
-        etEmail = findViewById(R.id.etRegisterUsername);
-        etPassword = findViewById(R.id.etRegisterPassword);
-        btnRegisterUser = findViewById(R.id.btnRegisterUser);
+        bindingView();
+        bindingAction();
+    }
 
-        // Xử lý sự kiện đăng ký
+    private void bindingAction() {
         btnRegisterUser.setOnClickListener(view -> {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
@@ -47,6 +45,12 @@ public class RegisterActivity extends AppCompatActivity {
                 registerUser(email, password);
             }
         });
+    }
+
+    private void bindingView() {
+        etEmail = findViewById(R.id.etRegisterUsername);
+        etPassword = findViewById(R.id.etRegisterPassword);
+        btnRegisterUser = findViewById(R.id.btnRegisterUser);
     }
 
     private void registerUser(String email, String password) {

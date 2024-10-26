@@ -4,7 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
-
+    <EditText
+        android:id="@+id/editTextCurrentPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mật khẩu hiện tại"
+        android:inputType="textPassword" />
     <EditText
         android:id="@+id/editTextNewPassword"
         android:layout_width="match_parent"
