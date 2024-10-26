@@ -17,11 +17,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+        // Load HomeFragment as the default fragment
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new HomeFragment())
+                    .commit();
+        }
 
-            setContentView(R.layout.activity_main);
-            setupBottomNavigation();
-
+        setupBottomNavigation();
     }
 
     private void setupBottomNavigation() {
