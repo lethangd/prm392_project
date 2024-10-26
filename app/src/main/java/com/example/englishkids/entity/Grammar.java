@@ -17,10 +17,14 @@ public class Grammar {
     @ColumnInfo(name = "lesson_id")
     public int lessonId;
 
-    public Grammar(int grammarTypeId, String correctSentence, int lessonId) {
+    @ColumnInfo(name = "isLearned")
+    private boolean isLearned;
+
+    public Grammar(int grammarTypeId, String correctSentence, int lessonId, boolean isLearned) {
         this.grammarTypeId = grammarTypeId;
         this.correctSentence = correctSentence;
         this.lessonId = lessonId;
+        this.isLearned = isLearned;
     }
 
     public int getGrammarTypeId() {

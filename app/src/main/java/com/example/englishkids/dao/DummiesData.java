@@ -44,37 +44,38 @@ public class DummiesData {
         if (db.grammarDao().getAllGrammar().isEmpty()) {
             // Create dummy grammar entries
             List<Grammar> grammars = new ArrayList<>();
-            grammars.add(new Grammar(1, "I eat breakfast every day.", 1)); // Simple Present
-            grammars.add(new Grammar(1, "She reads a book.", 1)); // Simple Present
-            grammars.add(new Grammar(2, "They are playing soccer.", 2)); // Present Continuous
-            grammars.add(new Grammar(2, "He is studying now.", 2)); // Present Continuous
-            grammars.add(new Grammar(3, "I visited my grandmother last week.", 3)); // Past Simple
-            grammars.add(new Grammar(3, "She watched a movie yesterday.", 3)); // Past Simple
-            grammars.add(new Grammar(4, "I will travel to Japan next year.", 4)); // Future Simple
-            grammars.add(new Grammar(4, "We will have a meeting tomorrow.", 4)); // Future Simple
+            grammars.add(new Grammar(1, "I eat breakfast every day.", 1, false)); // Simple Present
+            grammars.add(new Grammar(1, "She reads a book.", 1, false)); // Simple Present
+            grammars.add(new Grammar(2, "They are playing soccer.", 2, false)); // Present Continuous
+            grammars.add(new Grammar(2, "He is studying now.", 2, false)); // Present Continuous
+            grammars.add(new Grammar(3, "I visited my grandmother last week.", 3, false)); // Past Simple
+            grammars.add(new Grammar(3, "She watched a movie yesterday.", 3, false)); // Past Simple
+            grammars.add(new Grammar(4, "I will travel to Japan next year.", 4, false)); // Future Simple
+            grammars.add(new Grammar(4, "We will have a meeting tomorrow.", 4, false)); // Future Simple
 
             // Insert grammars into the database
             db.grammarDao().insertAll(grammars);
         }
 
-        // Kiểm tra xem đã có dữ liệu trong bảng Vocabulary chưa
+// Kiểm tra xem đã có dữ liệu trong bảng Vocabulary chưa
         if (db.vocabularyDao().getAllVocabulary().isEmpty()) {
             // Create dummy vocabulary entries
             List<Vocabulary> vocabularies = new ArrayList<>();
-            vocabularies.add(new Vocabulary("Apple", "Quả táo", "path/to/image1", "path/to/audio1", 1));
-            vocabularies.add(new Vocabulary("Run", "Chạy", "path/to/image2", "path/to/audio2", 2));
-            vocabularies.add(new Vocabulary("Study", "Học", "path/to/image3", "path/to/audio3", 2));
-            vocabularies.add(new Vocabulary("Eat", "Ăn", "path/to/image4", "path/to/audio4", 1));
-            vocabularies.add(new Vocabulary("Dog", "Con chó", "path/to/image5", "path/to/audio5", 1));
-            vocabularies.add(new Vocabulary("Play", "Chơi", "path/to/image6", "path/to/audio6", 2));
-            vocabularies.add(new Vocabulary("Book", "Cuốn sách", "path/to/image7", "path/to/audio7", 1));
-            vocabularies.add(new Vocabulary("Car", "Xe hơi", "path/to/image8", "path/to/audio8", 2));
-            vocabularies.add(new Vocabulary("Teacher", "Giáo viên", "path/to/image9", "path/to/audio9", 2));
-            vocabularies.add(new Vocabulary("Friend", "Bạn bè", "path/to/image10", "path/to/audio10", 1));
+            vocabularies.add(new Vocabulary("Apple", "Quả táo", "path/to/image1", 1, false));
+            vocabularies.add(new Vocabulary("Run", "Chạy", "path/to/image2",  2, false));
+            vocabularies.add(new Vocabulary("Study", "Học", "path/to/image3", 2, false));
+            vocabularies.add(new Vocabulary("Eat", "Ăn", "path/to/image4", 1, false));
+            vocabularies.add(new Vocabulary("Dog", "Con chó", "path/to/image5",  1, false));
+            vocabularies.add(new Vocabulary("Play", "Chơi", "path/to/image6",  2, false));
+            vocabularies.add(new Vocabulary("Book", "Cuốn sách", "path/to/image7",  1, false));
+            vocabularies.add(new Vocabulary("Car", "Xe hơi", "path/to/image8", 2, false));
+            vocabularies.add(new Vocabulary("Teacher", "Giáo viên", "path/to/image9",  2, false));
+            vocabularies.add(new Vocabulary("Friend", "Bạn bè", "path/to/image10",  1, false));
 
             // Insert vocabularies into the database
             db.vocabularyDao().insertAll(vocabularies);
         }
+
 
         // Verify data was added successfully
         List<Lesson> addedLessons = db.lessonDao().getAllLessons();

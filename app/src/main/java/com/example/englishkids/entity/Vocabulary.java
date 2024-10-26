@@ -18,18 +18,23 @@ public class Vocabulary {
     @ColumnInfo(name = "image_path")
     public String imagePath;
 
-    @ColumnInfo(name = "audio_path")
-    public String audioPath;
-
     @ColumnInfo(name = "lesson_id")
     public int lessonId;
 
-    public Vocabulary(String word, String meaning, String imagePath, String audioPath, int lessonId) {
+    @ColumnInfo(name = "isLearned")
+    private boolean isLearned;
+    public Vocabulary(String word, String meaning, String imagePath, int lessonId, boolean isLearned) {
         this.word = word;
         this.meaning = meaning;
         this.imagePath = imagePath;
-        this.audioPath = audioPath;
         this.lessonId = lessonId;
+        this.isLearned = isLearned;
+    }
+    public boolean isLearned() {
+        return isLearned;
+    }
+    public void setLearned(boolean learned) {
+        isLearned = learned;
     }
 
     public String getWord() {
@@ -54,14 +59,6 @@ public class Vocabulary {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
-    }
-
-    public String getAudioPath() {
-        return audioPath;
-    }
-
-    public void setAudioPath(String audioPath) {
-        this.audioPath = audioPath;
     }
 
     public int getLessonId() {
