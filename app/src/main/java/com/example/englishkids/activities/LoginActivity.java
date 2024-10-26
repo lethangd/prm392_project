@@ -11,23 +11,30 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.englishkids.R;
+import com.example.englishkids.dao.AppDatabase;
+import com.example.englishkids.dao.DummiesData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
     private Button btnLogin, btnRegister;
     private FirebaseAuth firebaseAuth;
+    private AppDatabase db;
+    private ExecutorService executorService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
-
+        db = AppDatabase.getInstance(this);
         if (isLoggedIn) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
@@ -36,7 +43,11 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
+        // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
+
+        // Initialize the ExecutorService
+        executorService = Executors.newSingleThreadExecutor();
 
         bindingView();
         bindingAction();
@@ -76,6 +87,12 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putBoolean("isLoggedIn", true);
                             editor.putString("email", email);
                             editor.apply();
+
+                            // Use the executor service to run the task
+                            executorService.execute(() -> {
+                                DummiesData.insertDummyData(db);
+                            });
+
                             Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();

@@ -1,6 +1,9 @@
 package com.example.englishkids.activities;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,9 +33,12 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
 
-        bindingView();
+        // Bind views
+        bindingView(view);
+        // Set up action listeners
         bindingAction();
         return view;
     }
@@ -45,11 +51,11 @@ public class SettingsFragment extends Fragment {
         btnLogout.setOnClickListener(v -> logout());
     }
 
-    private void bindingView() {
-        etCurrentPassword = getView().findViewById(R.id.editTextCurrentPassword);
-        etNewPassword = getView().findViewById(R.id.editTextNewPassword);
-        btnChangePassword = getView().findViewById(R.id.buttonChangePassword);
-        btnLogout = getView().findViewById(R.id.buttonLogout);
+    private void bindingView(View view) {
+        etCurrentPassword = view.findViewById(R.id.editTextCurrentPassword);
+        etNewPassword = view.findViewById(R.id.editTextNewPassword);
+        btnChangePassword = view.findViewById(R.id.buttonChangePassword);
+        btnLogout = view.findViewById(R.id.buttonLogout);
     }
 
     private void changePassword() {
@@ -87,9 +93,15 @@ public class SettingsFragment extends Fragment {
 
     private void logout() {
         firebaseAuth.signOut();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("isLoggedIn");
+        editor.apply();
 
-        // Navigate to login screen
-        navigateToLogin();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+
     }
 
     private void navigateToLogin() {

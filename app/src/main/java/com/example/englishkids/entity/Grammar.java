@@ -9,6 +9,7 @@ public class Grammar {
     @PrimaryKey(autoGenerate = true)
     public int grammar_id;
 
+    @ColumnInfo(name = "grammar_type_id")
     private int grammarTypeId;
 
     @ColumnInfo(name = "correct_sentence")
@@ -17,7 +18,7 @@ public class Grammar {
     @ColumnInfo(name = "lesson_id")
     public int lessonId;
 
-    @ColumnInfo(name = "isLearned")
+    @ColumnInfo(name = "is_learned")
     private boolean isLearned;
 
     public Grammar(int grammarTypeId, String correctSentence, int lessonId, boolean isLearned) {
@@ -26,6 +27,14 @@ public class Grammar {
         this.lessonId = lessonId;
         this.isLearned = isLearned;
     }
+
+    public boolean isLearned() {
+        return isLearned;
+    }
+
+    public void setLearned(boolean learned) {
+        isLearned = learned; // Thêm dấu ngoặc nhọn ở đây
+    } // Thêm dấu ngoặc nhọn ở đây
 
     public int getGrammarTypeId() {
         return grammarTypeId;

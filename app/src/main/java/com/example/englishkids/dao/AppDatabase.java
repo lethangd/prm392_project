@@ -9,15 +9,13 @@ import androidx.room.RoomDatabase;
 import com.example.englishkids.entity.Grammar;
 import com.example.englishkids.entity.GrammarType;
 import com.example.englishkids.entity.Lesson;
-import com.example.englishkids.entity.User;
 import com.example.englishkids.entity.Vocabulary;
 
-@Database(entities = {User.class, Grammar.class, GrammarType.class, Vocabulary.class, Lesson.class}, version = 3)
+@Database(entities = {Grammar.class, GrammarType.class, Vocabulary.class, Lesson.class}, version = 4)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
 
-    public abstract UserDao userDao();
     public abstract LessonDao lessonDao();
     public abstract GrammarDao grammarDao();
     public abstract GrammarTypeDao grammarTypeDao();
