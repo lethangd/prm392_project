@@ -25,4 +25,7 @@ public interface VocabularyDao {
 
     @Query("SELECT * FROM Vocabulary WHERE isLearned = 0 AND lesson_id = :lessonId")
     List<Vocabulary> getUnlearnedVocabulary(int lessonId);
+
+    @Query("UPDATE Vocabulary SET isLearned = 1 WHERE vocab_id = :vocabId")
+    void markAsLearned(int vocabId);
 }

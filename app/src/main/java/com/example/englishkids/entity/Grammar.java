@@ -32,6 +32,10 @@ public class Grammar {
         return isLearned;
     }
 
+    public int getGrammar_id() {
+        return grammar_id;
+    }
+
     public void setLearned(boolean learned) {
         isLearned = learned; // Thêm dấu ngoặc nhọn ở đây
     } // Thêm dấu ngoặc nhọn ở đây

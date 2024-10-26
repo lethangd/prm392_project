@@ -8,13 +8,17 @@ import com.example.englishkids.dao.VocabularyDao;
 import com.example.englishkids.entity.Vocabulary;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class VocabularyRepository {
     private VocabularyDao vocabularyDao;
+    private final ExecutorService executorService;
 
     public VocabularyRepository(Context context) {
         AppDatabase db = AppDatabase.getInstance(context);
         vocabularyDao = db.vocabularyDao();
+        executorService = Executors.newSingleThreadExecutor();
     }
 
     public List<Vocabulary> getAllVocabulary() {
@@ -31,6 +35,9 @@ public class VocabularyRepository {
 
     public List<Vocabulary> getUnlearnedVocabulary(int lessonId) {
         return  vocabularyDao.getUnlearnedVocabulary(lessonId);
+    }
+    public void markAsLearned(int vocabId) {
+        executorService.execute(() -> vocabularyDao.markAsLearned(vocabId));
     }
 
     private static class InsertVocabularyAsyncTask extends AsyncTask<Vocabulary, Void, Void> {

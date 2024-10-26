@@ -26,4 +26,7 @@ public interface GrammarDao {
 
     @Query("SELECT * FROM Grammar WHERE is_learned = 0 AND lesson_id = :lessonId")
     List<Grammar> getUnlearnedGrammar(int lessonId);
+
+    @Query("UPDATE Grammar SET is_learned = 1 WHERE grammar_id = :grammarId")
+    void markAsLearned(int grammarId);
 }

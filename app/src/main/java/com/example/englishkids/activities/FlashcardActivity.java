@@ -197,6 +197,10 @@ public class FlashcardActivity extends AppCompatActivity {
                 txtFeedback.setText("Chính xác!");
                 txtFeedback.setTextColor(Color.GREEN);
                 btnNextFlashcard.setVisibility(View.VISIBLE);
+
+                // Mark vocabulary as learned
+                VocabularyRepository vocabularyRepository = new VocabularyRepository(this);
+                vocabularyRepository.markAsLearned(currentVocab.getVocab_id());
             } else {
                 txtFeedback.setText("Sai rồi, thử lại!");
                 txtFeedback.setTextColor(Color.RED);
@@ -210,12 +214,17 @@ public class FlashcardActivity extends AppCompatActivity {
                 txtFeedback.setText("Chính xác!");
                 txtFeedback.setTextColor(Color.GREEN);
                 btnNextFlashcard.setVisibility(View.VISIBLE);
+
+                // Mark grammar as learned
+                GrammarRepository grammarRepository = new GrammarRepository(this);
+                grammarRepository.markAsLearned(currentGrammar.getGrammar_id());
             } else {
                 txtFeedback.setText("Sai rồi, thử lại!");
                 txtFeedback.setTextColor(Color.RED);
             }
         }
     }
+
 
     private void loadNextFlashcard() {
         currentVocabIndex++;

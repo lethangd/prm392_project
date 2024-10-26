@@ -37,6 +37,10 @@ public class Vocabulary {
         isLearned = learned;
     }
 
+    public int getVocab_id() {
+        return vocab_id;
+    }
+
     public String getWord() {
         return word;
     }

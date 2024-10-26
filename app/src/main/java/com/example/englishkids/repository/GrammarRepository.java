@@ -10,13 +10,17 @@ import com.example.englishkids.entity.Grammar;
 import com.example.englishkids.entity.Vocabulary;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GrammarRepository {
     private GrammarDao grammarDao;
+    private final ExecutorService executorService;
 
     public GrammarRepository(Context context) {
         AppDatabase db = AppDatabase.getInstance(context);
         grammarDao = db.grammarDao();
+        executorService = Executors.newSingleThreadExecutor();
     }
 
     public List<Grammar> getAllGrammar() {
@@ -29,6 +33,10 @@ public class GrammarRepository {
 
     public List<Grammar> getGrammarByLessonId(int lessonId) {
         return grammarDao.getGrammarByLessonId(lessonId);
+    }
+
+    public void markAsLearned(int grammarId) {
+        executorService.execute(() -> grammarDao.markAsLearned(grammarId));
     }
     public List<Grammar> getUnlearnedGrammar(int lessonId) {
         return  grammarDao.getUnlearnedGrammar(lessonId);
