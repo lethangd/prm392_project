@@ -1,37 +1,102 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_marginTop="100dp"
+    android:layout_gravity="center_horizontal"
+    android:padding="0dp">
 
-    <TextView
-        android:id="@+id/lessonTitle"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgbg"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        app:shapeAppearanceOverlay="@style/circular"
+        android:padding="20dp"
+        app:strokeWidth="12dp"
+        app:strokeColor="#e3eafc"
+        android:src="@drawable/bg_lesson"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/startButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.243"
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:id="@+id/lessonNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bài học 1"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lessonTitle"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="Thì hiện tại: Câu khẳng định"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lesson Title"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/startButton"
+        app:layout_constraintEnd_toEndOf="@+id/imgbg"
+        app:layout_constraintStart_toStartOf="@+id/imgbg">
 
-    <TextView
-        android:id="@+id/lessonGrammar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Grammar"
-        android:layout_marginTop="8dp"
-        android:textSize="16sp"/>
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_star_filled" />
 
-    <TextView
-        android:id="@+id/lessonVocabulary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Vocabulary"
-        android:layout_marginTop="8dp"
-        android:textSize="16sp"/>
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_star_filled" />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_star_empty" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Lesson"
-        android:layout_marginTop="8dp" />
-</LinearLayout>
+        android:layout_height="70dp"
+        android:text="Tiếp tục"
+        android:textSize="20sp"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="30dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
