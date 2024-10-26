@@ -1,5 +1,6 @@
 package com.example.englishkids.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.englishkids.R;
 import com.example.englishkids.activities.FlashcardActivity;
 import com.example.englishkids.entity.Lesson;
+import com.example.englishkids.repository.LessonRepository;
 
 import java.util.List;
 
@@ -39,13 +41,39 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
     @Override
     public void onBindViewHolder(@NonNull LessonViewHolder holder, int position) {
         Lesson lesson = lessonList.get(position);
+        LessonRepository lessonRepository = new LessonRepository(context);
         holder.lessonTitle.setText(lesson.getLessonName());
-        int progress = lesson.getProgress();
+
+        // Fetch progress asynchronously and update UI accordingly
+        lessonRepository.getLessonProgress(lesson.getLesson_id(), progress  -> {
+                lesson.setProgress(progress); // Update the lesson object with the retrieved progress
+
+                // Ensure UI updates run on the main thread
+                ((Activity) context).runOnUiThread(() -> {
+                    updateStartButton(holder, progress); // Update button text based on progress
+                    disableButtonIfPreviousIncomplete(holder, position); // Disable button if previous lesson incomplete
+                    updateStarRating(holder, progress); // Update star rating based on progress
+                });
+        });
+
+        holder.startButton.setOnClickListener(v -> {
+            Intent intent = new Intent(context, FlashcardActivity.class);
+            intent.putExtra("lesson_id", lesson.getLesson_id());
+            context.startActivity(intent);
+        });
+    }
+
+    // Helper Method to Set Button Text
+    private void updateStartButton(LessonViewHolder holder, int progress) {
         if (progress == 0) {
             holder.startButton.setText("Bắt đầu");
         } else {
             holder.startButton.setText("Tiếp tục");
         }
+    }
+
+    // Helper Method to Disable Button if Previous Lesson is Incomplete
+    private void disableButtonIfPreviousIncomplete(LessonViewHolder holder, int position) {
         if (position > 0 && lessonList.get(position - 1).getProgress() == 0) {
             holder.startButton.setEnabled(false);
             holder.startButton.setAlpha(0.5f); // Visually indicate disabled state
@@ -53,29 +81,16 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
             holder.startButton.setEnabled(true);
             holder.startButton.setAlpha(1.0f); // Reset visual indication
         }
-        if (progress >= 67) {
-            holder.star1.setImageResource(R.drawable.ic_star_filled);
-            holder.star2.setImageResource(R.drawable.ic_star_filled);
-            holder.star3.setImageResource(R.drawable.ic_star_filled);
-        } else if (progress >= 34) {
-            holder.star1.setImageResource(R.drawable.ic_star_filled);
-            holder.star2.setImageResource(R.drawable.ic_star_filled);
-            holder.star3.setImageResource(R.drawable.ic_star_empty);
-        } else if (progress > 0) {
-            holder.star1.setImageResource(R.drawable.ic_star_filled);
-            holder.star2.setImageResource(R.drawable.ic_star_empty);
-            holder.star3.setImageResource(R.drawable.ic_star_empty);
-        }else{
-            holder.star1.setImageResource(R.drawable.ic_star_empty);
-            holder.star2.setImageResource(R.drawable.ic_star_empty);
-            holder.star3.setImageResource(R.drawable.ic_star_empty);
-        }
-        holder.startButton.setOnClickListener(v -> {
-            Intent intent = new Intent(context, FlashcardActivity.class);
-            intent.putExtra("lesson_id", lesson.getLesson_id());
-            context.startActivity(intent);
-        });
     }
+
+    // Helper Method to Set Star Rating Based on Progress
+    private void updateStarRating(LessonViewHolder holder, int progress) {
+        holder.star1.setImageResource(progress >= 34 ? R.drawable.ic_star_filled : R.drawable.ic_star_empty);
+        holder.star2.setImageResource(progress >= 67 ? R.drawable.ic_star_filled : R.drawable.ic_star_empty);
+        holder.star3.setImageResource(progress == 100 ? R.drawable.ic_star_filled : R.drawable.ic_star_empty);
+    }
+
+
 
 
     @Override

@@ -2,6 +2,7 @@ package com.example.englishkids.repository;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.englishkids.dao.AppDatabase;
 import com.example.englishkids.dao.VocabularyDao;
@@ -37,8 +38,11 @@ public class VocabularyRepository {
         return  vocabularyDao.getUnlearnedVocabulary(lessonId);
     }
     public void markAsLearned(int vocabId) {
-        executorService.execute(() -> vocabularyDao.markAsLearned(vocabId));
+        executorService.execute(() -> {
+            vocabularyDao.markAsLearned(vocabId);
+        });
     }
+
 
     private static class InsertVocabularyAsyncTask extends AsyncTask<Vocabulary, Void, Void> {
         private VocabularyDao vocabularyDao;

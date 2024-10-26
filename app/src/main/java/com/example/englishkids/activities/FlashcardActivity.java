@@ -74,7 +74,6 @@ public class FlashcardActivity extends AppCompatActivity {
         executorService.execute(() -> {
             VocabularyRepository vocabularyRepository = new VocabularyRepository(this);
             GrammarRepository grammarRepository = new GrammarRepository(this);
-
             vocabularyList = vocabularyRepository.getUnlearnedVocabulary(lessonId);
             grammarList = grammarRepository.getUnlearnedGrammar(lessonId);
 
@@ -162,7 +161,7 @@ public class FlashcardActivity extends AppCompatActivity {
         btnUndo.setVisibility(View.VISIBLE);
 
         if (userSentence.size() == layoutOptions.getChildCount()) {
-            checkAnswer(); // Gọi hàm kiểm tra ngay khi người dùng hoàn thành sắp xếp
+            checkAnswer();
         }
     }
 
@@ -198,7 +197,6 @@ public class FlashcardActivity extends AppCompatActivity {
                 txtFeedback.setTextColor(Color.GREEN);
                 btnNextFlashcard.setVisibility(View.VISIBLE);
 
-                // Mark vocabulary as learned
                 VocabularyRepository vocabularyRepository = new VocabularyRepository(this);
                 vocabularyRepository.markAsLearned(currentVocab.getVocab_id());
             } else {
