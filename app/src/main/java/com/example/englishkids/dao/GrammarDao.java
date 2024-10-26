@@ -22,4 +22,7 @@ public interface GrammarDao {
 
     @Query("SELECT * FROM Grammar WHERE lesson_id = :lessonId")
     List<Grammar> getGrammarByLessonId(int lessonId);
+
+    @Query("SELECT * FROM Grammar WHERE is_learned = 0")
+    List<Grammar> getUnlearnedGrammar();
 }

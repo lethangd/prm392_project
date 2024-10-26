@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import com.example.englishkids.dao.AppDatabase;
 import com.example.englishkids.dao.LessonDao;
 import com.example.englishkids.entity.Lesson;
+import com.example.englishkids.entity.Vocabulary;
 
 import java.util.List;
 
@@ -29,6 +30,10 @@ public class LessonRepository {
 
     public Lesson getLessonById(int lessonId) {
         return  lessonDao.getLessonById(lessonId);
+    }
+
+    public List<Vocabulary> getUnlearnedVocabulary() {
+        return  lessonDao.getUnlearnedVocabulary();
     }
 
     private static class InsertLessonAsyncTask extends AsyncTask<Lesson, Void, Void> {

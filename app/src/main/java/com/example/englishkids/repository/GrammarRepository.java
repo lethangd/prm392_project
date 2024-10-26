@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import com.example.englishkids.dao.AppDatabase;
 import com.example.englishkids.dao.GrammarDao;
 import com.example.englishkids.entity.Grammar;
+import com.example.englishkids.entity.Vocabulary;
 
 import java.util.List;
 
@@ -29,7 +30,9 @@ public class GrammarRepository {
     public List<Grammar> getGrammarByLessonId(int lessonId) {
         return grammarDao.getGrammarByLessonId(lessonId);
     }
-
+    public List<Grammar> getUnlearnedVocabulary() {
+        return  grammarDao.getUnlearnedGrammar();
+    }
     private static class InsertGrammarAsyncTask extends AsyncTask<Grammar, Void, Void> {
         private GrammarDao grammarDao;
 
