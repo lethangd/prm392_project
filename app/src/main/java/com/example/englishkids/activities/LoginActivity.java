@@ -20,16 +20,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
     private Button btnLogin, btnRegister;
-    private FirebaseAuth firebaseAuth;  // Khởi tạo Firebase Auth
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
 
-        // Nếu người dùng đã đăng nhập, chuyển tới MainActivity
         if (isLoggedIn) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
@@ -38,16 +36,13 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        // Khởi tạo Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // Ánh xạ các view
-        etEmail = findViewById(R.id.etUsername);  // Dùng email thay cho username
-        etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnRegister = findViewById(R.id.btnRegister);
+        bindingView();
+        bindingAction();
+    }
 
-        // Xử lý sự kiện đăng nhập
+    private void bindingAction() {
         btnLogin.setOnClickListener(view -> {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
@@ -58,11 +53,16 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(email, password);
             }
         });
-
-        // Chuyển sang màn hình đăng ký
         btnRegister.setOnClickListener(view -> {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
+    }
+
+    private void bindingView() {
+        etEmail = findViewById(R.id.etUsername);
+        etPassword = findViewById(R.id.etPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
     }
 
     private void loginUser(String email, String password) {
@@ -71,14 +71,11 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Lưu trạng thái đăng nhập vào SharedPreferences
                             SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putBoolean("isLoggedIn", true);
                             editor.putString("email", email);
                             editor.apply();
-
-                            // Chuyển sang MainActivity
                             Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();

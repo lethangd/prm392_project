@@ -27,16 +27,14 @@ public class GrammarActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grammar);
 
-        txtInstruction = findViewById(R.id.txtInstruction);
-        txtFeedbackGrammar = findViewById(R.id.txtFeedbackGrammar);
-        layoutSentence = findViewById(R.id.layoutSentence);
-        gridOptions = findViewById(R.id.gridOptions);
+    }
 
-        sentenceParts = getSentencePartsForLesson();
-        loadGrammarExercise(sentenceParts);
+    private void bindingAction() {
+    }
+
+    private void bindingView() {
+        
     }
 
     private void loadGrammarExercise(List<String> sentenceParts) {

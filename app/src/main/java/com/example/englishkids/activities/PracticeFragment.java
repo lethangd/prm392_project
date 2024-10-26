@@ -38,16 +38,15 @@ public class PracticeFragment extends Fragment {
         lessonRepository = new LessonRepository(getContext());
         executorService = Executors.newSingleThreadExecutor();
 
-        // Fetch all previously learned lessons in a background thread
         executorService.execute(() -> {
             List<Lesson> lessons = lessonRepository.getAllLessons();
-            // Update the RecyclerView on the main thread
             getActivity().runOnUiThread(() -> {
                 lessonAdapter = new LessonAdapter(lessons, getContext());
                 recyclerView.setAdapter(lessonAdapter);
             });
         });
-
         return view;
+
     }
+
 }

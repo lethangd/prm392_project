@@ -19,7 +19,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
     private Button btnRegisterUser;
-    private FirebaseAuth firebaseAuth;  // Firebase Auth instance
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                            // Quay lại màn hình Login
                             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                             finish();
                         } else {
