@@ -17,6 +17,7 @@ import com.example.englishkids.entity.Grammar;
 import com.example.englishkids.entity.Vocabulary;
 import com.example.englishkids.repository.GrammarRepository;
 import com.example.englishkids.repository.VocabularyRepository;
+import com.google.firebase.FirebaseApp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +44,7 @@ public class FlashcardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard);
-
+        FirebaseApp.initializeApp(this);
         // Initialize ExecutorService
         executorService = Executors.newSingleThreadExecutor();
         int lessonId = getIntent().getIntExtra("lesson_id", -1);

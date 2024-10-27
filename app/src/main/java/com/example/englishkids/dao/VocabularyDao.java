@@ -31,4 +31,5 @@ public interface VocabularyDao {
 
     @Query("SELECT * FROM Vocabulary WHERE vocab_id = :vocabId")
     Vocabulary getVocabularyById(int vocabId);
+
 }
