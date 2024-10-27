@@ -158,15 +158,15 @@ public class DummiesData {
         vocabularies.add(new Vocabulary("Friend", "Bạn bè", "https://thumbs.dreamstime.com/b/cute-happy-kid-hand-shake-friend-agreement-background-boy-cartoon-character-children-clipart-design-friends-friendship-160885724.jpg", 1, false));
 
         vocabularies.add(new Vocabulary("House", "Ngôi nhà", "https://media.istockphoto.com/id/155666671/vector/vector-illustration-of-red-house-icon.jpg?s=612x612&w=0&k=20&c=tBqaabvmjFOBVUibZxbd8oWJqrFR5dy-l2bEDJMtZ40=", 3, false));
-        vocabularies.add(new Vocabulary("Water", "Nước", "path/to/image12", 3, false));
-        vocabularies.add(new Vocabulary("Chair", "Cái ghế", "path/to/image13", 3, false));
-        vocabularies.add(new Vocabulary("Table", "Cái bàn", "path/to/image14", 3, false));
-        vocabularies.add(new Vocabulary("Window", "Cửa sổ", "path/to/image15", 3, false));
-        vocabularies.add(new Vocabulary("Door", "Cửa", "path/to/image16", 3, false));
-        vocabularies.add(new Vocabulary("Phone", "Điện thoại", "path/to/image17", 3, false));
-        vocabularies.add(new Vocabulary("Computer", "Máy tính", "path/to/image18", 3, false));
-        vocabularies.add(new Vocabulary("City", "Thành phố", "path/to/image19", 3, false));
-        vocabularies.add(new Vocabulary("Country", "Quốc gia", "path/to/image20", 3, false));
+        vocabularies.add(new Vocabulary("Water", "Nước", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBsZm6v-x7WX2T3bSZKfD-gNhkgtkN3Gijlg&s", 3, false));
+        vocabularies.add(new Vocabulary("Chair", "Cái ghế", "https://rusticreddoor.com/cdn/shop/products/hawthorne-rustic-ladder-back-chair.jpg?v=1643843712&width=1946", 3, false));
+        vocabularies.add(new Vocabulary("Table", "Cái bàn", "https://images.pickawood.com/gfx/conf/tables/new/berlin-et-kernbuche-natur-geoelt-swiss-legn.jpg", 3, false));
+        vocabularies.add(new Vocabulary("Window", "Cửa sổ", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8vk9rjmtn-oViNGbptjYlHCN41TOhXwD2pA&s", 3, false));
+        vocabularies.add(new Vocabulary("Door", "Cửa", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqOJO39YPHl92ZSktG7mIFAbh97MaS7MD6IA&s", 3, false));
+        vocabularies.add(new Vocabulary("Phone", "Điện thoại", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_gjiZtDAmBZbI1lRov01KwnE9P8zsJ_XR-A&s", 3, false));
+        vocabularies.add(new Vocabulary("Computer", "Máy tính", "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Crystal_Project_computer.png/200px-Crystal_Project_computer.png", 3, false));
+        vocabularies.add(new Vocabulary("City", "Thành phố", "https://img.freepik.com/free-photo/shiny-night-city_1127-8.jpg", 3, false));
+        vocabularies.add(new Vocabulary("Country", "Quốc gia", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7Hoz2EV6tvYlmfNnmmVLXDtE8qYhFcCkSCA&s", 3, false));
 
         vocabularies.add(new Vocabulary("Food", "Thức ăn", "path/to/image21", 4, false));
         vocabularies.add(new Vocabulary("Drink", "Đồ uống", "path/to/image22", 4, false));
