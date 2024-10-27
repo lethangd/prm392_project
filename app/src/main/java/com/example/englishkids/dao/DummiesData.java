@@ -81,29 +81,66 @@ public class DummiesData {
 
     private static void insertGrammars(AppDatabase db) {
         List<Grammar> grammars = new ArrayList<>();
+        // Lesson 1: Simple Present
         grammars.add(new Grammar(1, "I eat breakfast every day.", 1, false));
         grammars.add(new Grammar(1, "She reads a book.", 1, false));
+        grammars.add(new Grammar(1, "They go to school on foot.", 1, false));
+        grammars.add(new Grammar(1, "He works in a bank.", 1, false));
+
+        // Lesson 2: Present Continuous
         grammars.add(new Grammar(2, "They are playing soccer.", 2, false));
         grammars.add(new Grammar(2, "He is studying now.", 2, false));
+        grammars.add(new Grammar(2, "She is cooking dinner.", 2, false));
+        grammars.add(new Grammar(2, "I am watching TV.", 2, false));
+
+        // Lesson 3: Past Simple
         grammars.add(new Grammar(3, "I visited my grandmother last week.", 3, false));
         grammars.add(new Grammar(3, "She watched a movie yesterday.", 3, false));
+        grammars.add(new Grammar(3, "They traveled to Paris last summer.", 3, false));
+        grammars.add(new Grammar(3, "He finished his homework last night.", 3, false));
+
+        // Lesson 4: Future Simple
         grammars.add(new Grammar(4, "I will travel to Japan next year.", 4, false));
         grammars.add(new Grammar(4, "We will have a meeting tomorrow.", 4, false));
+        grammars.add(new Grammar(4, "She will start her new job next month.", 4, false));
+        grammars.add(new Grammar(4, "They will visit us next weekend.", 4, false));
 
+        // Lesson 5: Present Perfect
         grammars.add(new Grammar(5, "I have eaten breakfast.", 5, false));
         grammars.add(new Grammar(5, "She has read the book.", 5, false));
+        grammars.add(new Grammar(5, "They have traveled to many countries.", 5, false));
+        grammars.add(new Grammar(5, "He has completed his project.", 5, false));
+
+        // Lesson 6: Past Perfect
         grammars.add(new Grammar(6, "I had visited my grandmother before she moved.", 6, false));
         grammars.add(new Grammar(6, "She had watched the movie before it was released.", 6, false));
+        grammars.add(new Grammar(6, "They had finished their work before the deadline.", 6, false));
+        grammars.add(new Grammar(6, "He had learned Spanish before going to Spain.", 6, false));
+
+        // Lesson 7: Future Perfect
         grammars.add(new Grammar(7, "I will have traveled to Japan by next year.", 7, false));
         grammars.add(new Grammar(7, "We will have finished the project by Friday.", 7, false));
+        grammars.add(new Grammar(7, "She will have completed her degree by next semester.", 7, false));
+        grammars.add(new Grammar(7, "They will have moved into their new house by the end of the month.", 7, false));
+
+        // Lesson 8: Present Perfect Continuous
         grammars.add(new Grammar(8, "I have been eating breakfast for an hour.", 8, false));
         grammars.add(new Grammar(8, "She has been reading that book all day.", 8, false));
+        grammars.add(new Grammar(8, "They have been working on this project for weeks.", 8, false));
+        grammars.add(new Grammar(8, "He has been studying English for five years.", 8, false));
+
+        // Lesson 9: Past Perfect Continuous
         grammars.add(new Grammar(9, "I had been visiting my grandmother before she passed away.", 9, false));
         grammars.add(new Grammar(9, "She had been watching movies for three hours.", 9, false));
+        grammars.add(new Grammar(9, "They had been living in that city for ten years before they moved.", 9, false));
+        grammars.add(new Grammar(9, "He had been working at that company for two years.", 9, false));
 
-        // Conditional sentences
+        // Lesson 10: Conditional Sentences
         grammars.add(new Grammar(10, "If it rains, I will stay at home.", 10, false));
         grammars.add(new Grammar(10, "If I had known, I would have gone.", 10, false));
+        grammars.add(new Grammar(10, "If you study hard, you will pass the exam.", 10, false));
+        grammars.add(new Grammar(10, "If I win the lottery, I will travel the world.", 10, false));
+
         db.grammarDao().insertAll(grammars);
     }
 
