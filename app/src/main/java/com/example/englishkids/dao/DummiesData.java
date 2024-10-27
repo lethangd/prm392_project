@@ -190,16 +190,16 @@ public class DummiesData {
         vocabularies.add(new Vocabulary("Desert", "Sa mạc", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3R-XHd0jCGVDhplQ_unClg5YsJdBF2e6htQ&s", 5, false));
         vocabularies.add(new Vocabulary("Beach", "Bãi biển", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXo3xlrCq-EDrU-GDPowfLiKDeAUrGHSgCew&s", 5, false));
 
-        vocabularies.add(new Vocabulary("Train", "Tàu hỏa", "path/to/image41", 6, false));
-        vocabularies.add(new Vocabulary("Bus", "Xe buýt", "path/to/image42", 6, false));
-        vocabularies.add(new Vocabulary("Bicycle", "Xe đạp", "path/to/image43", 6, false));
-        vocabularies.add(new Vocabulary("Airplane", "Máy bay", "path/to/image44", 6, false));
-        vocabularies.add(new Vocabulary("Ship", "Tàu thủy", "path/to/image45", 6, false));
-        vocabularies.add(new Vocabulary("Motorcycle", "Xe máy", "path/to/image46", 6, false));
-        vocabularies.add(new Vocabulary("Train Station", "Ga tàu", "path/to/image47", 6, false));
-        vocabularies.add(new Vocabulary("Airport", "Sân bay", "path/to/image48", 6, false));
-        vocabularies.add(new Vocabulary("Market", "Chợ", "path/to/image49", 6, false));
-        vocabularies.add(new Vocabulary("Hospital", "Bệnh viện", "path/to/image50", 6, false));
+        vocabularies.add(new Vocabulary("Train", "Tàu hỏa", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjTfZJ3HEP8QXAesOlRGRZfrw9oCYfT0UJpw&s", 6, false));
+        vocabularies.add(new Vocabulary("Bus", "Xe buýt", "https://img.freepik.com/premium-vector/cartoon-school-bus-white-background_1072300-79.jpg", 6, false));
+        vocabularies.add(new Vocabulary("Bicycle", "Xe đạp", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP_Mj7kgeXBDNwFqlQ0Ug9WgkV1kd96cSTYg&s", 6, false));
+        vocabularies.add(new Vocabulary("Airplane", "Máy bay", "https://i.abcnewsfe.com/a/29ad17e0-4dec-488a-9c27-bdc2424ba5a5/electric-plane-ht-ml-240110_1704902584341_hpMain_16x9.jpg?w=992", 6, false));
+        vocabularies.add(new Vocabulary("Ship", "Tàu thủy", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2Yom0yWhdAeO6veOjWePZSdCNHYBaznlVfA&s", 6, false));
+        vocabularies.add(new Vocabulary("Motorcycle", "Xe máy", "https://content2.kawasaki.com/ContentStorage/KMV/ProductTrimGroup/32/aa6b43cf-7721-429c-8f55-2a8527f49752.jpg?w=750", 6, false));
+        vocabularies.add(new Vocabulary("Train Station", "Ga tàu", "https://upload.wikimedia.org/wikipedia/commons/1/1e/Hanoi_train_station_from_trackside.jpg", 6, false));
+        vocabularies.add(new Vocabulary("Airport", "Sân bay", "https://image.cnbcfm.com/api/v1/image/107177246-1673454132712-gettyimages-1246154739-AFP_336V8DZ.jpeg?v=1682946269&w=1480&h=833&ffmt=webp&vtcrop=y", 6, false));
+        vocabularies.add(new Vocabulary("Market", "Chợ", "https://cdn.vietnamisawesome.com/wp-content/uploads/2023/02/668651407.jpg", 6, false));
+        vocabularies.add(new Vocabulary("Hospital", "Bệnh viện", "https://thumbs.dreamstime.com/z/hospital-building-white-background-city-flat-style-47934085.jpg", 6, false));
         db.vocabularyDao().insertAll(vocabularies);
     }
 
