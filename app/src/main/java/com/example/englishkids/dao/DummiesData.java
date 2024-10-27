@@ -109,12 +109,12 @@ public class DummiesData {
 
     private static void insertVocabulary(AppDatabase db) {
         List<Vocabulary> vocabularies = new ArrayList<>();
-        vocabularies.add(new Vocabulary("Apple", "Quả táo", "path/to/image1", 1, false));
+        vocabularies.add(new Vocabulary("Apple", "Quả táo", "apple", 1, false));
         vocabularies.add(new Vocabulary("Run", "Chạy", "path/to/image2", 2, false));
         vocabularies.add(new Vocabulary("Study", "Học", "path/to/image3", 2, false));
         vocabularies.add(new Vocabulary("Eat", "Ăn", "path/to/image4", 1, false));
-        vocabularies.add(new Vocabulary("Dog", "Con chó", "path/to/image5", 1, false));
-        vocabularies.add(new Vocabulary("Play", "Chơi", "path/to/image6", 2, false));
+        vocabularies.add(new Vocabulary("Dog", "Con chó", "apple", 1, false));
+        vocabularies.add(new Vocabulary("Play", "Chơi", "apple", 2, false));
         vocabularies.add(new Vocabulary("Book", "Cuốn sách", "path/to/image7", 1, false));
         vocabularies.add(new Vocabulary("Car", "Xe hơi", "path/to/image8", 2, false));
         vocabularies.add(new Vocabulary("Teacher", "Giáo viên", "path/to/image9", 2, false));
