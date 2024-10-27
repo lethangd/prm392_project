@@ -168,16 +168,16 @@ public class DummiesData {
         vocabularies.add(new Vocabulary("City", "Thành phố", "https://img.freepik.com/free-photo/shiny-night-city_1127-8.jpg", 3, false));
         vocabularies.add(new Vocabulary("Country", "Quốc gia", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7Hoz2EV6tvYlmfNnmmVLXDtE8qYhFcCkSCA&s", 3, false));
 
-        vocabularies.add(new Vocabulary("Food", "Thức ăn", "path/to/image21", 4, false));
-        vocabularies.add(new Vocabulary("Drink", "Đồ uống", "path/to/image22", 4, false));
-        vocabularies.add(new Vocabulary("School", "Trường học", "path/to/image23", 4, false));
-        vocabularies.add(new Vocabulary("Garden", "Khu vườn", "path/to/image24", 4, false));
-        vocabularies.add(new Vocabulary("Sun", "Mặt trời", "path/to/image25", 4, false));
-        vocabularies.add(new Vocabulary("Moon", "Mặt trăng", "path/to/image26", 4, false));
-        vocabularies.add(new Vocabulary("Star", "Ngôi sao", "path/to/image27", 4, false));
-        vocabularies.add(new Vocabulary("Sky", "Bầu trời", "path/to/image28", 4, false));
-        vocabularies.add(new Vocabulary("Cloud", "Đám mây", "path/to/image29", 4, false));
-        vocabularies.add(new Vocabulary("Rain", "Mưa", "path/to/image30", 4, false));
+        vocabularies.add(new Vocabulary("Food", "Thức ăn", "https://img.freepik.com/premium-vector/variety-food-including-variety-different-foods_1166763-16220.jpg?semt=ais_hybrid", 4, false));
+        vocabularies.add(new Vocabulary("Drink", "Đồ uống", "https://www.beanilla.com/wp/wp-content/uploads/2022/06/RefreshingDrinks-1024x683.jpg", 4, false));
+        vocabularies.add(new Vocabulary("School", "Trường học", "https://media.istockphoto.com/id/1480246301/vector/vector-illustration-of-high-school-building-vector-school-building.jpg?s=612x612&w=0&k=20&c=vR6dixHuh8Ypw1c3pjR-7ahN2V1vhCKxxTzDd7HlVbY=", 4, false));
+        vocabularies.add(new Vocabulary("Garden", "Khu vườn", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKx2FD1WzOeQhIvMk2Bqo3ttWIUutQuUD1Gg&s", 4, false));
+        vocabularies.add(new Vocabulary("Sun", "Mặt trời", "https://easydrawingguides.com/wp-content/uploads/2018/09/Sun-10.png", 4, false));
+        vocabularies.add(new Vocabulary("Moon", "Mặt trăng", "https://www.rmg.co.uk/sites/default/files/styles/full_width_1440/public/Color-Full%20Moon%20%C2%A9%20Nicolas%20Lefaudeux.jpg?itok=LCd5IvmA", 4, false));
+        vocabularies.add(new Vocabulary("Star", "Ngôi sao", "https://img.freepik.com/free-vector/3d-metal-star-isolated_1308-117760.jpg", 4, false));
+        vocabularies.add(new Vocabulary("Sky", "Bầu trời", "https://img.freepik.com/free-photo/white-cloud-blue-sky-sea_74190-4488.jpg", 4, false));
+        vocabularies.add(new Vocabulary("Cloud", "Đám mây", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8RjJzHiQBXmg-H4p4awTe7y1ZNmJ6YWoA9w&s", 4, false));
+        vocabularies.add(new Vocabulary("Rain", "Mưa", "https://static.vecteezy.com/system/resources/thumbnails/042/146/565/small_2x/ai-generated-beautiful-rain-day-view-photo.jpg", 4, false));
 
         vocabularies.add(new Vocabulary("Snow", "Tuyết", "path/to/image31", 5, false));
         vocabularies.add(new Vocabulary("Wind", "Gió", "path/to/image32", 5, false));
