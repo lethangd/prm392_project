@@ -146,18 +146,18 @@ public class DummiesData {
 
     private static void insertVocabulary(AppDatabase db) {
         List<Vocabulary> vocabularies = new ArrayList<>();
-        vocabularies.add(new Vocabulary("Apple", "Quả táo", "path/to/image1", 1, false));
-        vocabularies.add(new Vocabulary("Run", "Chạy", "path/to/image2", 2, false));
-        vocabularies.add(new Vocabulary("Study", "Học", "path/to/image3", 2, false));
-        vocabularies.add(new Vocabulary("Eat", "Ăn", "path/to/image4", 1, false));
-        vocabularies.add(new Vocabulary("Dog", "Con chó", "path/to/image5", 1, false));
-        vocabularies.add(new Vocabulary("Play", "Chơi", "path/to/image6", 2, false));
-        vocabularies.add(new Vocabulary("Book", "Cuốn sách", "path/to/image7", 1, false));
-        vocabularies.add(new Vocabulary("Car", "Xe hơi", "path/to/image8", 2, false));
-        vocabularies.add(new Vocabulary("Teacher", "Giáo viên", "path/to/image9", 2, false));
-        vocabularies.add(new Vocabulary("Friend", "Bạn bè", "path/to/image10", 1, false));
+        vocabularies.add(new Vocabulary("Apple", "Quả táo", "https://unsplash.com/photos/fresh-red-apples-in-the-wooden-box-on-black-background-top-view-9OrF6J9AcVA", 1, false));
+        vocabularies.add(new Vocabulary("Run", "Chạy", "https://unsplash.com/photos/pretty-young-woman-in-blue-track-suit-running-by-the-river-at-autumn-morning-IgYEb8fh8VM", 2, false));
+        vocabularies.add(new Vocabulary("Study", "Học", "https://unsplash.com/photos/young-mother-helping-her-daughter-with-homework-at-home-KrG_EIpAS-M", 2, false));
+        vocabularies.add(new Vocabulary("Eat", "Ăn", "https://static.vecteezy.com/system/resources/thumbnails/005/162/056/small_2x/cartoon-little-boy-eating-spaghetti-free-vector.jpg", 1, false));
+        vocabularies.add(new Vocabulary("Dog", "Con chó", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW7zpG7Q2QGK9YGchMgfbXycRtDimjSCjk8w&s", 1, false));
+        vocabularies.add(new Vocabulary("Play", "Chơi", "https://thegeniusofplay.org/App_Themes/tgop/images/expertadvice/articles/play-in-park810x456.jpg", 2, false));
+        vocabularies.add(new Vocabulary("Book", "Cuốn sách", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPF7GVCOhi1rHsD2zwSidze85loxSp-9lLog&s", 1, false));
+        vocabularies.add(new Vocabulary("Car", "Xe hơi", "https://imgd.aeplcdn.com/370x208/n/cw/ec/139651/curvv-exterior-right-front-three-quarter.jpeg?isig=0&q=80", 2, false));
+        vocabularies.add(new Vocabulary("Teacher", "Giáo viên", "https://img.freepik.com/free-vector/hand-drawn-black-teacher-clipart-illustration_23-2150923180.jpg", 2, false));
+        vocabularies.add(new Vocabulary("Friend", "Bạn bè", "https://thumbs.dreamstime.com/b/cute-happy-kid-hand-shake-friend-agreement-background-boy-cartoon-character-children-clipart-design-friends-friendship-160885724.jpg", 1, false));
 
-        vocabularies.add(new Vocabulary("House", "Ngôi nhà", "path/to/image11", 3, false));
+        vocabularies.add(new Vocabulary("House", "Ngôi nhà", "https://media.istockphoto.com/id/155666671/vector/vector-illustration-of-red-house-icon.jpg?s=612x612&w=0&k=20&c=tBqaabvmjFOBVUibZxbd8oWJqrFR5dy-l2bEDJMtZ40=", 3, false));
         vocabularies.add(new Vocabulary("Water", "Nước", "path/to/image12", 3, false));
         vocabularies.add(new Vocabulary("Chair", "Cái ghế", "path/to/image13", 3, false));
         vocabularies.add(new Vocabulary("Table", "Cái bàn", "path/to/image14", 3, false));
