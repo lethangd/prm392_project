@@ -99,7 +99,10 @@ public class FlashcardActivity extends AppCompatActivity {
 
             // Hiển thị ảnh từ nếu có
             if (vocab.getImagePath() != null && !vocab.getImagePath().isEmpty()) {
-                Glide.with(this).load(vocab.getImagePath()).into(imgWordImage);
+                Glide.with(this)
+                        .load(vocab.getImagePath())
+                        .error(R.drawable.ic_image_placeholder)
+                        .into(imgWordImage);
             } else {
                 imgWordImage.setImageResource(R.drawable.ic_image_placeholder);
             }
