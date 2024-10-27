@@ -179,16 +179,16 @@ public class DummiesData {
         vocabularies.add(new Vocabulary("Cloud", "Đám mây", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8RjJzHiQBXmg-H4p4awTe7y1ZNmJ6YWoA9w&s", 4, false));
         vocabularies.add(new Vocabulary("Rain", "Mưa", "https://static.vecteezy.com/system/resources/thumbnails/042/146/565/small_2x/ai-generated-beautiful-rain-day-view-photo.jpg", 4, false));
 
-        vocabularies.add(new Vocabulary("Snow", "Tuyết", "path/to/image31", 5, false));
-        vocabularies.add(new Vocabulary("Wind", "Gió", "path/to/image32", 5, false));
-        vocabularies.add(new Vocabulary("Fire", "Lửa", "path/to/image33", 5, false));
-        vocabularies.add(new Vocabulary("Earth", "Đất", "path/to/image34", 5, false));
-        vocabularies.add(new Vocabulary("Ocean", "Đại dương", "path/to/image35", 5, false));
-        vocabularies.add(new Vocabulary("River", "Dòng sông", "path/to/image36", 5, false));
-        vocabularies.add(new Vocabulary("Mountain", "Ngọn núi", "path/to/image37", 5, false));
-        vocabularies.add(new Vocabulary("Forest", "Khu rừng", "path/to/image38", 5, false));
-        vocabularies.add(new Vocabulary("Desert", "Sa mạc", "path/to/image39", 5, false));
-        vocabularies.add(new Vocabulary("Beach", "Bãi biển", "path/to/image40", 5, false));
+        vocabularies.add(new Vocabulary("Snow", "Tuyết", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgILv6V5CCG-GQr1lgP3bNbyW2ugdXSqCniQ&s", 5, false));
+        vocabularies.add(new Vocabulary("Wind", "Gió", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFQ2U1msCK5LoxGSnifrmremGuup1T-RMVvg&s", 5, false));
+        vocabularies.add(new Vocabulary("Fire", "Lửa", "https://images.vexels.com/media/users/3/146887/isolated/preview/41faeb4b7129b75f4883d75c72627835-fire-flame-clipart.png?w=360", 5, false));
+        vocabularies.add(new Vocabulary("Earth", "Đất", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiDzBupA046HfsR0HCaBdE2o80MT7Z-363VQ&s", 5, false));
+        vocabularies.add(new Vocabulary("Ocean", "Đại dương", "https://cdn.shopify.com/s/files/1/0603/5439/6408/files/fishcircle_2000x952_09cd941e-e1e9-4ed6-9b93-a94166e9c37f.webp?v=1653509090", 5, false));
+        vocabularies.add(new Vocabulary("River", "Dòng sông", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLLG85m6wq6bgyTZmv-UQ6zHOoYQs-lFf1sg&s", 5, false));
+        vocabularies.add(new Vocabulary("Mountain", "Ngọn núi", "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg/800px-Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg", 5, false));
+        vocabularies.add(new Vocabulary("Forest", "Khu rừng", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQkFDAaf0Rb3CCkYGLTS4ef194Geigc-FT2w&s", 5, false));
+        vocabularies.add(new Vocabulary("Desert", "Sa mạc", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3R-XHd0jCGVDhplQ_unClg5YsJdBF2e6htQ&s", 5, false));
+        vocabularies.add(new Vocabulary("Beach", "Bãi biển", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXo3xlrCq-EDrU-GDPowfLiKDeAUrGHSgCew&s", 5, false));
 
         vocabularies.add(new Vocabulary("Train", "Tàu hỏa", "path/to/image41", 6, false));
         vocabularies.add(new Vocabulary("Bus", "Xe buýt", "path/to/image42", 6, false));
