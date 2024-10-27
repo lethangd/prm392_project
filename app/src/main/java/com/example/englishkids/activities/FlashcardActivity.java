@@ -99,17 +99,13 @@ public class FlashcardActivity extends AppCompatActivity {
 
             // Hiển thị ảnh từ nếu có
             if (vocab.getImagePath() != null && !vocab.getImagePath().isEmpty()) {
-                int imageResId = getResources().getIdentifier(vocab.getImagePath(), "drawable", getPackageName());
-                if (imageResId != 0) { // Kiểm tra nếu ID hợp lệ
-                    Glide.with(this)
-                            .load(imageResId)
-                            .error(R.drawable.apple)
-                            .into(imgWordImage);
-                } else {
-                    imgWordImage.setImageResource(R.drawable.apple);
-                }
+                Glide.with(this)
+                        .load(vocab.getImagePath())
+                        .placeholder(R.drawable.ic_image_placeholder)
+                        .error(R.drawable.ic_image_placeholder) // Error image
+                        .into(imgWordImage);
             } else {
-                imgWordImage.setImageResource(R.drawable.apple);
+                imgWordImage.setImageResource(R.drawable.ic_image_placeholder);
             }
         } else {
             // Chuyển sang chế độ ngữ pháp nếu hết từ vựng
@@ -118,7 +114,6 @@ public class FlashcardActivity extends AppCompatActivity {
             loadGrammarFlashcard();
         }
     }
-
 
     private void loadGrammarFlashcard() {
         if (currentVocabIndex < grammarList.size()) {
