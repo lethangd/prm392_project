@@ -8,9 +8,10 @@
     <!-- Image -->
 
     <!-- Meaning of the word -->
+
     <ImageView
         android:id="@+id/img_word_image"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="400dp"
         android:src="@drawable/ic_image_placeholder" />
 

@@ -3,31 +3,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
-    <EditText
-        android:id="@+id/editTextCurrentPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Mật khẩu hiện tại"
-        android:inputType="textPassword" />
-    <EditText
-        android:id="@+id/editTextNewPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter new password"
-        android:inputType="textPassword" />
+    android:padding="16dp"
+    android:background="@color/background_color"
+    android:gravity="center">
 
-    <Button
-        android:id="@+id/buttonChangePassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change Password" />
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Change Password"
+android:textSize="24sp"
+android:textColor="@color/primaryColor"
+    android:layout_marginBottom="24dp"
+    android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/buttonLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log Out"
-        android:layout_marginTop="16dp" />
+<EditText
+android:id="@+id/editTextCurrentPassword"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Current Password"
+android:inputType="textPassword"
+android:background="@drawable/edittext_background"
+    android:padding="12dp"
+    android:textColor="@color/text_color"
+    android:textColorHint="@color/hint_color" />
 
-</LinearLayout>
+<EditText
+android:id="@+id/editTextNewPassword"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="New Password"
+android:inputType="textPassword"
+android:background="@drawable/edittext_background"
+    android:padding="12dp"
+    android:textColor="@color/text_color"
+    android:textColorHint="@color/hint_color"
+    android:layout_marginTop="16dp" />
+
+<Button
+android:id="@+id/buttonChangePassword"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="Change Password"
+android:layout_marginTop="24dp"
+android:backgroundTint="@color/button_color"
+    android:textColor="@android:color/white"
+    android:padding="12dp"
+    android:drawablePadding="8dp"
+    android:drawableStart="@drawable/ic_lock"
+    android:fontFamily="sans-serif-medium" />
+
+<Button
+android:id="@+id/buttonLogout"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="Log Out"
+android:layout_marginTop="16dp"
+android:backgroundTint="@color/secondaryColor"
+    android:textColor="@android:color/white"
+    android:padding="12dp"
+    android:drawablePadding="8dp"
+    android:drawableStart="@drawable/ic_logout"
+    android:fontFamily="sans-serif-medium" />
+    </LinearLayout>

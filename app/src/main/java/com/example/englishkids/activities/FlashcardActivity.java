@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -39,6 +41,7 @@ public class FlashcardActivity extends AppCompatActivity {
     private boolean isVocabularyMode = true;
     private int currentVocabIndex = 0;
     private ExecutorService executorService;
+    private ImageButton btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class FlashcardActivity extends AppCompatActivity {
         btnCheckAnswer.setOnClickListener(v -> checkAnswer());
         btnNextFlashcard.setOnClickListener(v -> loadNextFlashcard());
         btnUndo.setOnClickListener(v -> undoLastWord());
+        btnBack.setOnClickListener(v -> showExitConfirmation());
     }
 
     private void bindingView() {
@@ -69,6 +73,17 @@ public class FlashcardActivity extends AppCompatActivity {
         btnUndo = findViewById(R.id.btn_undo);
         layoutOptions = findViewById(R.id.layout_options);
         layoutSentence = findViewById(R.id.layout_sentence);
+        btnBack = findViewById(R.id.btn_back);
+    }
+
+    private void showExitConfirmation() {
+        new AlertDialog.Builder(this)
+                .setTitle("Xác nhận")
+                .setMessage("Bạn có chắc chắn muốn rời khỏi bài học?")
+                .setPositiveButton("Có", (dialog, which) -> finish())
+                .setNegativeButton("Không", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private void loadLessonData(int lessonId) {
@@ -99,17 +114,13 @@ public class FlashcardActivity extends AppCompatActivity {
 
             // Hiển thị ảnh từ nếu có
             if (vocab.getImagePath() != null && !vocab.getImagePath().isEmpty()) {
-                int imageResId = getResources().getIdentifier(vocab.getImagePath(), "drawable", getPackageName());
-                if (imageResId != 0) { // Kiểm tra nếu ID hợp lệ
-                    Glide.with(this)
-                            .load(imageResId)
-                            .error(R.drawable.apple)
-                            .into(imgWordImage);
-                } else {
-                    imgWordImage.setImageResource(R.drawable.apple);
-                }
+                Glide.with(this)
+                        .load(vocab.getImagePath()) // Directly load the URL
+                        .placeholder(R.drawable.ic_image_placeholder) // Placeholder while loading
+                        .error(R.drawable.ic_image_placeholder) // Fallback image if loading fails
+                        .into(imgWordImage);
             } else {
-                imgWordImage.setImageResource(R.drawable.apple);
+                imgWordImage.setImageResource(R.drawable.ic_image_placeholder);
             }
         } else {
             // Chuyển sang chế độ ngữ pháp nếu hết từ vựng
