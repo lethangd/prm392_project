@@ -34,19 +34,17 @@ public class VocabularyAdapter extends RecyclerView.Adapter<VocabularyAdapter.Vo
         holder.wordTextView.setText(vocab.word);
         holder.meaningTextView.setText(vocab.meaning);
 
-        int imageResId = holder.itemView.getContext().getResources().getIdentifier(vocab.getImagePath(), "drawable", holder.itemView.getContext().getPackageName());
+        // Thay đổi để tải ảnh từ một URL
+        String imageUrl = vocab.getImagePath(); // Giả sử bạn đã thêm phương thức getImageUrl() trong lớp Vocabulary
 
-        Log.d("VocabularyAdapter", "ImageResId: " + imageResId + " for word: " + vocab.word); // Debugging line
+        Log.d("VocabularyAdapter", "ImageUrl: " + imageUrl + " for word: " + vocab.word); // Debugging line
 
-        if (imageResId != 0) {
-            Glide.with(holder.itemView.getContext())
-                    .load(imageResId)
-                    .error(R.drawable.apple) // Set a default error image
-                    .into(holder.imgWordImage);
-        } else {
-            holder.imgWordImage.setImageResource(R.drawable.apple);
-        }
+        Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+                .error(R.drawable.apple) // Set a default error image
+                .into(holder.imgWordImage);
     }
+
 
 
     @Override
