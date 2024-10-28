@@ -33,6 +33,15 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        boolean isFirstLaunch = sharedPreferences.getBoolean("isFirstLaunch", true);
+
+        if (isFirstLaunch) {
+            Intent intent = new Intent(this, InitialSetupActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            setContentView(R.layout.activity_main);
+        }
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
         db = AppDatabase.getInstance(this);
         if (isLoggedIn) {

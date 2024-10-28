@@ -1,0 +1,8 @@
+<!-- res/drawable/button_oval_disabled.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/button_radius" />
+    <solid android:color="@color/bg_btn_disable" /> <!-- Màu nền của nút đã vô hiệu hóa -->
+    <stroke
+        android:width="2dp"
+        android:color="@color/border_btn_disable" /> <!-- Màu viền khi đã vô hiệu hóa -->
+</shape>

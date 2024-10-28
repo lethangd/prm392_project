@@ -1,0 +1,8 @@
+<!-- res/drawable/button_oval_correct.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/button_radius" />
+    <solid android:color="@color/bg_btn_active" /> <!-- Màu nền của nút đúng -->
+    <stroke
+        android:width="2dp"
+        android:color="@color/border_btn_correct" /> <!-- Màu viền khi đúng -->
+</shape>

@@ -2,4 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bg_btn">#fefefe</color>
+    <color name="bg_btn_disable">#fefefe</color>
+    <color name="bg_btn_active">#e7f8e8</color>
+    <color name="bg_btn_incorrect">#ffeaed</color>
+    <color name="border_btn_disable">#e5e5e5</color>
+    <color name="border_btn_correct">#58bd79</color>
+    <color name="border_btn_incorrect">#fe3600</color>
+    <color name="text_disable">#efefef</color>
+    <color name="bg_btn_blue_light">#ebf8ff</color>
 </resources>

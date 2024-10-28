@@ -2,6 +2,7 @@ package com.example.englishkids.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,11 +22,13 @@ import com.example.englishkids.repository.VocabularyRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class FlashcardActivity extends AppCompatActivity {
+public class FlashcardActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
 
     private TextView txtMeaning, txtFeedback;
     private EditText etWordInput;
@@ -38,18 +41,25 @@ public class FlashcardActivity extends AppCompatActivity {
     private boolean isVocabularyMode = true;
     private int currentVocabIndex = 0;
     private ExecutorService executorService;
+    private TextToSpeech textToSpeech;
+    private LinearLayout keyboardContainer;
+    private StringBuilder userAnswer = new StringBuilder();
+    private HashMap<Character, Integer> letterCountMap = new HashMap<>();
+    private HashMap<Character, Integer> userLetterCountMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard);
 
+        textToSpeech = new TextToSpeech(this, this);
         // Initialize ExecutorService
         executorService = Executors.newSingleThreadExecutor();
         int lessonId = getIntent().getIntExtra("lesson_id", -1);
         loadLessonData(lessonId);
         bindingView();
         bindingAction();
+
     }
 
     private void bindingAction() {
@@ -90,21 +100,21 @@ public class FlashcardActivity extends AppCompatActivity {
             etWordInput.setText("");
             txtFeedback.setText("");
 
-            // Chỉ hiển thị các thành phần liên quan đến từ vựng
+            // Đọc từ
+            textToSpeech.speak(vocab.getWord(), TextToSpeech.QUEUE_FLUSH, null, null);
+
             layoutOptions.setVisibility(View.GONE);
             layoutSentence.setVisibility(View.GONE);
             etWordInput.setVisibility(View.VISIBLE);
             btnCheckAnswer.setVisibility(View.VISIBLE);
             btnUndo.setVisibility(View.GONE);
 
-            // Hiển thị ảnh từ nếu có
             if (vocab.getImagePath() != null && !vocab.getImagePath().isEmpty()) {
                 Glide.with(this).load(vocab.getImagePath()).into(imgWordImage);
             } else {
                 imgWordImage.setImageResource(R.drawable.ic_image_placeholder);
             }
         } else {
-            // Chuyển sang chế độ ngữ pháp nếu hết từ vựng
             isVocabularyMode = false;
             currentVocabIndex = 0;
             loadGrammarFlashcard();
@@ -119,7 +129,9 @@ public class FlashcardActivity extends AppCompatActivity {
             layoutSentence.removeAllViews();
             userSentence.clear();
 
-            // Chỉ hiển thị các thành phần liên quan đến ngữ pháp
+            // Đọc câu đúng
+            textToSpeech.speak(grammar.getCorrectSentence(), TextToSpeech.QUEUE_FLUSH, null, null);
+
             layoutOptions.setVisibility(View.VISIBLE);
             layoutSentence.setVisibility(View.VISIBLE);
             etWordInput.setVisibility(View.GONE);
@@ -197,6 +209,8 @@ public class FlashcardActivity extends AppCompatActivity {
                 txtFeedback.setText("Chính xác!");
                 txtFeedback.setTextColor(Color.GREEN);
                 btnNextFlashcard.setVisibility(View.VISIBLE);
+                // Đọc lại từ
+                textToSpeech.speak(currentVocab.getWord(), TextToSpeech.QUEUE_FLUSH, null, null);
 
                 // Mark vocabulary as learned
                 VocabularyRepository vocabularyRepository = new VocabularyRepository(this);
@@ -204,6 +218,8 @@ public class FlashcardActivity extends AppCompatActivity {
             } else {
                 txtFeedback.setText("Sai rồi, thử lại!");
                 txtFeedback.setTextColor(Color.RED);
+                // Đọc lại từ đúng
+                textToSpeech.speak(currentVocab.getWord(), TextToSpeech.QUEUE_FLUSH, null, null);
             }
         } else {
             Grammar currentGrammar = grammarList.get(currentVocabIndex);
@@ -214,6 +230,8 @@ public class FlashcardActivity extends AppCompatActivity {
                 txtFeedback.setText("Chính xác!");
                 txtFeedback.setTextColor(Color.GREEN);
                 btnNextFlashcard.setVisibility(View.VISIBLE);
+                // Đọc lại câu đúng
+                textToSpeech.speak(correctSentence, TextToSpeech.QUEUE_FLUSH, null, null);
 
                 // Mark grammar as learned
                 GrammarRepository grammarRepository = new GrammarRepository(this);
@@ -221,8 +239,19 @@ public class FlashcardActivity extends AppCompatActivity {
             } else {
                 txtFeedback.setText("Sai rồi, thử lại!");
                 txtFeedback.setTextColor(Color.RED);
+                // Đọc lại câu đúng
+                textToSpeech.speak(correctSentence, TextToSpeech.QUEUE_FLUSH, null, null);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (textToSpeech != null) {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
     }
 
 
@@ -236,6 +265,17 @@ public class FlashcardActivity extends AppCompatActivity {
             loadVocabularyFlashcard();
         } else {
             loadGrammarFlashcard();
+        }
+    }
+    @Override
+    public void onInit(int status) {
+        if (status == TextToSpeech.SUCCESS) {
+            int result = textToSpeech.setLanguage(Locale.ENGLISH);
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                // Ngôn ngữ không được hỗ trợ
+            }
+        } else {
+            // Khởi tạo TTS thất bại
         }
     }
 }

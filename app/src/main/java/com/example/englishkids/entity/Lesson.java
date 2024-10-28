@@ -18,9 +18,9 @@ public class Lesson {
 
     @ColumnInfo(name = "lesson_type")
     public String lessonType;
-
     @Ignore
-    private int progress;
+    //    @ColumnInfo(name = "lesson_progress")
+    private int progress = 0;
 
     public Lesson(String lessonName, String description, String lessonType) {
         this.lessonName = lessonName;

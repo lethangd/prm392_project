@@ -1,0 +1,15 @@
+<!-- res/drawable/button_background.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <!-- Màu nền của nút -->
+            <solid android:color="#fefefe" /> <!-- Thay màu này bằng màu mong muốn -->
+
+            <!-- Đặt bán kính nếu bạn muốn bo góc -->
+            <corners android:radius="8dp" />
+
+            <!-- Viền của nút -->
+            <stroke android:width="2dp" android:color="#e2e2e2" /> <!-- Thay màu này bằng màu mong muốn -->
+        </shape>
+    </item>
+</selector>
