@@ -200,6 +200,34 @@ public class DummiesData {
         vocabularies.add(new Vocabulary("Airport", "Sân bay", "https://image.cnbcfm.com/api/v1/image/107177246-1673454132712-gettyimages-1246154739-AFP_336V8DZ.jpeg?v=1682946269&w=1480&h=833&ffmt=webp&vtcrop=y", 6, false));
         vocabularies.add(new Vocabulary("Market", "Chợ", "https://cdn.vietnamisawesome.com/wp-content/uploads/2023/02/668651407.jpg", 6, false));
         vocabularies.add(new Vocabulary("Hospital", "Bệnh viện", "https://thumbs.dreamstime.com/z/hospital-building-white-background-city-flat-style-47934085.jpg", 6, false));
+
+        vocabularies.add(new Vocabulary("Pizza", "Bánh pizza", "https://daylambanh.edu.vn/wp-content/uploads/2022/10/cach-lam-pizza-bang-noi-chien-khong-dau.jpg", 7, false));
+        vocabularies.add(new Vocabulary("Burger", "Bánh mì kẹp", "https://burgerking.vn/media/catalog/product/cache/1/small_image/316x/9df78eab33525d08d6e5fb8d27136e95/1/9/19-burger-b_-n_ng-whopper-ph_-mai-th_t-heo-x_ng-kh_i_-bbq_1.jpg", 7, false));
+        vocabularies.add(new Vocabulary("Ice Cream", "Kem", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjZ5QpVr0Yq0taYNdA7vg1AfD7KUfEbk_NXQ&s", 7, false));
+        vocabularies.add(new Vocabulary("Pasta", "Mì Ý", "https://www.allrecipes.com/thmb/JPQcpUKRsPXhUZm0H-XZUpjrp8w=/0x512/filters:no_upscale():max_bytes(150000):strip_icc()/67700_RichPastaforthePoorKitchen_ddmfs_4x3_2284-220302ec8328442096df370dede357d7.jpg", 7, false));
+        vocabularies.add(new Vocabulary("Salad", "Salad", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcOKw8TpfrH31D_AfVEPGzPYnNTvVth75nFg&s", 7, false));
+
+        // Vocabulary for lesson 8 (Animals)
+        vocabularies.add(new Vocabulary("Elephant", "Con voi", "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/African_Bush_Elephant.jpg/1200px-African_Bush_Elephant.jpg", 8, false));
+        vocabularies.add(new Vocabulary("Lion", "Sư tử", "https://www.shutterstock.com/image-photo/lion-family-4-person-vertical-600w-2430115969.jpg", 8, false));
+        vocabularies.add(new Vocabulary("Tiger", "Hổ", "https://cdn.britannica.com/83/195983-138-66807699/numbers-tiger-populations.jpg?w=800&h=450&c=crop", 8, false));
+        vocabularies.add(new Vocabulary("Monkey", "Con khỉ", "https://media.newyorker.com/photos/59095bb86552fa0be682d9d0/master/pass/Monkey-Selfie.jpg", 8, false));
+        vocabularies.add(new Vocabulary("Giraffe", "Hươu cao cổ", "https://d1jyxxz9imt9yb.cloudfront.net/medialib/4659/image/s768x1300/AdobeStock_331202050_538219_reduced.jpg", 8, false));
+
+        // Vocabulary for lesson 9 (Jobs)
+        vocabularies.add(new Vocabulary("Doctor", "Bác sĩ", "https://img.freepik.com/premium-vector/boy-with-stethoscope-around-his-neck_1013341-328801.jpg?semt=ais_hybrid", 9, false));
+        vocabularies.add(new Vocabulary("Engineer", "Kỹ sư", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ08-IuzbiqS398HMmcMp5oicV00RDI_8i3g&s", 9, false));
+        vocabularies.add(new Vocabulary("Teacher", "Giáo viên", "https://img.freepik.com/free-vector/hand-drawn-black-teacher-clipart-illustration_23-2150923180.jpg", 9, false));
+        vocabularies.add(new Vocabulary("Chef", "Đầu bếp", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1DxB8UnYh4fJRarIPFSHxa_TXp13hRBWsiw&s", 9, false));
+        vocabularies.add(new Vocabulary("Police Officer", "Cảnh sát", "https://m.media-amazon.com/images/I/51ucFarzXAL._AC_UF1000,1000_QL80_.jpg", 9, false));
+
+        // Vocabulary for lesson 10 (School Supplies)
+        vocabularies.add(new Vocabulary("Pencil", "Bút chì", "https://img.freepik.com/premium-vector/pencil-personal-use-vector-illustration_1275990-6151.jpg", 10, false));
+        vocabularies.add(new Vocabulary("Eraser", "Cục tẩy", "https://cdn.theschoollocker.com.au/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/5/2/526_c20.jpg", 10, false));
+        vocabularies.add(new Vocabulary("Notebook", "Vở", "https://m.media-amazon.com/images/I/718vM+75UNL.jpg", 10, false));
+        vocabularies.add(new Vocabulary("Ruler", "Thước kẻ", "https://images-na.ssl-images-amazon.com/images/I/71YTbLEY0NL.jpg", 10, false));
+        vocabularies.add(new Vocabulary("Backpack", "Ba lô", "https://cdn.thewirecutter.com/wp-content/media/2022/09/backpacks-2048px-9904.jpg?auto=webp&quality=75&width=1024", 10, false));
+
         db.vocabularyDao().insertAll(vocabularies);
     }
 
