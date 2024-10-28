@@ -45,13 +45,12 @@ public class CustomKeyboard extends LinearLayout {
                 letterButton.setAllCaps(false);
                 letterButton.setPadding(4, 4, 4, 4);
 
-                // Set margins for the button
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams();
                 params.width = 0;
                 params.height = GridLayout.LayoutParams.WRAP_CONTENT;
                 params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
                 params.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
-                params.setMargins(8, 8, 8, 8); // Set margins (left, top, right, bottom)
+                params.setMargins(8, 8, 8, 8);
                 letterButton.setLayoutParams(params);
                 letterButton.setBackgroundResource(R.drawable.button_background);
 
@@ -75,7 +74,7 @@ public class CustomKeyboard extends LinearLayout {
                 params.height = GridLayout.LayoutParams.WRAP_CONTENT;
                 params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
                 params.rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
-                params.setMargins(8, 8, 8, 8); // Set margins for the delete button
+                params.setMargins(8, 8, 8, 8);
                 deleteButton.setLayoutParams(params);
 
                 deleteButton.setOnClickListener(view -> {
@@ -124,14 +123,14 @@ public class CustomKeyboard extends LinearLayout {
 
     public void enableAllButtons() {
         for (char letter = 'a'; letter <= 'z'; letter++) {
-            enableButton(letter); // Assuming enableButton(char letter) enables the specific button for that letter
+            enableButton(letter);
         }
         enableDeleteButton();
     }
     public void disableDeleteButton() {
         if (deleteButton != null) {
             deleteButton.setEnabled(false);
-            deleteButton.setAlpha(0.5f); // Giảm độ mờ để thể hiện nút đã bị vô hiệu hóa
+            deleteButton.setAlpha(0.5f);
         }
     }
     public void enableDeleteButton() {

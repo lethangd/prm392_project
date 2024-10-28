@@ -1,6 +1,8 @@
 package com.example.englishkids.activities;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,20 +34,20 @@ public class LessonDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesson_detail);
+        EdgeToEdge.enable(this);
 
-        vocabRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        grammarRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        bindingView();
+        bindingAction();
 
         lessonRepository = new LessonRepository(this);
         vocabularyRepository = new VocabularyRepository(this);
         grammarRepository = new GrammarRepository(this);
         executorService = Executors.newSingleThreadExecutor();
+        vocabRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        grammarRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Get lesson ID from intent
         int lessonId = getIntent().getIntExtra("lesson_id", -1);
-        loadLessonDetails(lessonId);  // Fetch lesson details
-        bindingView();
-        bindingAction();
+        loadLessonDetails(lessonId);
     }
 
     private void bindingAction() {

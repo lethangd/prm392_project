@@ -50,6 +50,7 @@ public class MatchingActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private boolean isAnimating = false;
     private int correctMatchesCount = 0;
+    private LinearLayout vocabularyRow, meaningRow;
 
 
     @Override
@@ -74,9 +75,6 @@ public class MatchingActivity extends AppCompatActivity {
     }
 
     private void onNextButtonClick(View view) {
-        openFillingVocabSection();
-    }
-    private void openFillingVocabSection() {
         Intent intent = new Intent(this, FillVocabInBlankActivity.class);
         intent.putExtra("lesson_id", getIntent().getIntExtra("lesson_id", -1));
         intent.putExtra("progress", progressBar.getProgress());
@@ -90,6 +88,8 @@ public class MatchingActivity extends AppCompatActivity {
         soundManager = new SoundManager(this);
         textToSpeechManager = new TextToSpeechManager(this);
         nextButton = findViewById(R.id.btn_continue);
+        vocabularyRow = findViewById(R.id.vocabularyRow);
+        meaningRow = findViewById(R.id.meaningRow);
     }
 
     private void loadVocabularyData() {
@@ -113,8 +113,7 @@ public class MatchingActivity extends AppCompatActivity {
         }
         Collections.shuffle(meanings);
 
-        LinearLayout vocabularyRow = findViewById(R.id.vocabularyRow);
-        LinearLayout meaningRow = findViewById(R.id.meaningRow);
+
 
         for (Vocabulary v : vocabularyList) {
             FrameLayout wordButtonLayout = createButton(v.word, v.vocab_id, 1);

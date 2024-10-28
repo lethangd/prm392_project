@@ -81,14 +81,26 @@ public class VocabularyActivity extends AppCompatActivity {
     }
 
     private void bindingAction() {
-        optionOne.setOnClickListener(v -> {
-            checkAnswer(optionOne.getText().toString());
-        });
-        optionTwo.setOnClickListener(v -> {
-            checkAnswer(optionTwo.getText().toString());
-        });
-        btnNext.setOnClickListener(v -> showNextVocabulary());
-        btnSpeaker.setOnClickListener(v -> textToSpeechManager.speak(word.getText().toString()));
+        optionOne.setOnClickListener(this::onOptionOneClick);
+        optionTwo.setOnClickListener(this::onOptionTwoClick);
+        btnNext.setOnClickListener(this::onNextClick);
+        btnSpeaker.setOnClickListener(this::onSpeakerClick);
+    }
+
+    private void onSpeakerClick(View view) {
+        textToSpeechManager.speak(word.getText().toString());
+    }
+
+    private void onNextClick(View view) {
+        showNextVocabulary();
+    }
+
+    private void onOptionTwoClick(View view) {
+        checkAnswer(optionTwo.getText().toString());
+    }
+
+    private void onOptionOneClick(View view) {
+        checkAnswer(optionOne.getText().toString());
     }
 
     private void loadVocabularyList() {
@@ -111,11 +123,11 @@ public class VocabularyActivity extends AppCompatActivity {
     private void displayVocabulary(Vocabulary vocab, String incorrectMeaning) {
         word.setText(vocab.getWord());
 
-        if (vocab.getImagePath() != null && !vocab.getImagePath().isEmpty()) {
-            Glide.with(this).load(R.drawable.bg_lesson).into(imageDisplay);
-        } else {
-            imageDisplay.setImageResource(R.drawable.ic_image_placeholder);
-        }
+        Glide.with(this)
+                .load(vocab.imagePath)
+                .placeholder(R.drawable.bg_lesson)
+                .error(R.drawable.ic_image_placeholder)
+                .into(imageDisplay);
 
         boolean isOptionOneCorrect = Math.random() < 0.5;
         optionOne.setText(isOptionOneCorrect ? vocab.getMeaning() : (incorrectMeaning.isEmpty() ? getRandomIncorrectMeaning(vocab.getMeaning()) : incorrectMeaning));
@@ -182,10 +194,6 @@ public class VocabularyActivity extends AppCompatActivity {
         view.animate().alpha(1f).setDuration(300).setListener(null);
     }
 
-    private void fadeOut(View view) {
-        view.animate().alpha(0f).setDuration(300).withEndAction(() -> view.setVisibility(View.GONE));
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -194,12 +202,10 @@ public class VocabularyActivity extends AppCompatActivity {
             textToSpeechManager.shutdown();
         }
 
-        // Release sounds
         if (soundManager != null) {
             soundManager.release();
         }
 
-        // Release the result handler sound resources
         if (resultHandler != null) {
             resultHandler.release();
         }

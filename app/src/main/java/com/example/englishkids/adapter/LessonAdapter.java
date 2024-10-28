@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.englishkids.R;
 import com.example.englishkids.activities.FlashcardActivity;
+import com.example.englishkids.activities.VocabularyActivity;
 import com.example.englishkids.entity.Lesson;
 import com.example.englishkids.repository.LessonRepository;
 
@@ -57,7 +58,7 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
         });
 
         holder.startButton.setOnClickListener(v -> {
-            Intent intent = new Intent(context, FlashcardActivity.class);
+            Intent intent = new Intent(context, VocabularyActivity.class);
             intent.putExtra("lesson_id", lesson.getLesson_id());
             context.startActivity(intent);
         });

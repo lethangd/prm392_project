@@ -63,12 +63,8 @@ public class FillVocabInBlankActivity extends AppCompatActivity {
         bindingView();
         bindingAction();
 
-        // Initialize the executor service
-        executorService = Executors.newSingleThreadExecutor();
-
         loadVocabList();
         setupKeyboardListeners();
-        hintButton.setOnClickListener(view -> giveHint());
         updateUserInputDisplay();
     }
 
@@ -90,21 +86,47 @@ public class FillVocabInBlankActivity extends AppCompatActivity {
 
     private void bindingAction() {
         btnNext.setOnClickListener(this::onBtnNextClick);
+        hintButton.setOnClickListener(this::onHintButtonClick);
+    }
 
+    private void onHintButtonClick(View view) {
+        String answer = vocabularyList.get(currentAnswerIndex).word;
+        for (char letter : answer.toCharArray()) {
+            char lowerCaseLetter = Character.toLowerCase(letter);
+            if (userLetterCountMap.get(lowerCaseLetter) < letterCountMap.get(lowerCaseLetter)) {
+                Toast.makeText(this, "Gợi ý: " + letter, Toast.LENGTH_SHORT).show();
+                keyboard.highlightButton(lowerCaseLetter);
+                break;
+            }
+        }
     }
 
     private void onBtnNextClick(View view) {
-        moveToNextAnswer();
+        currentAnswerIndex++;
+        if (currentAnswerIndex < vocabularyList.size()) {
+            userAnswer.setLength(0);
+            letterCountMap.clear();
+            userLetterCountMap.clear();
+            keyboard.enableAllButtons();
+            setupLetterCountMap();
+            updateUserInputDisplay();
+            disableUnusedKeyboardButtons();
+            resultLayout.setVisibility(View.GONE);
+            btnNext.setEnabled(false);
+            btnNext.setAlpha(0.3f);
+            word.setText(vocabularyList.get(currentAnswerIndex).word);
+        } else {
+            updateProgressOfLesson();
+        }
     }
 
     private void loadVocabList() {
+        executorService = Executors.newSingleThreadExecutor();
         int lessonId = getIntent().getIntExtra("lesson_id", -1);
-        // Run database access in a background thread
         executorService.execute(() -> {
             VocabularyRepository vocabularyRepository = new VocabularyRepository(this);
             vocabularyList = vocabularyRepository.getVocabularyByLessonId(lessonId);
 
-            // Important: Ensure you run UI updates on the main thread
             runOnUiThread(() -> {
                 if (vocabularyList != null && !vocabularyList.isEmpty()) {
                     progressBar.setMax(vocabularyList.size() * 3);
@@ -125,15 +147,15 @@ public class FillVocabInBlankActivity extends AppCompatActivity {
 
     private void setupLetterCountMap() {
         if (vocabularyList == null || vocabularyList.isEmpty()) {
-            return; // Safety check
+            return;
         }
 
-        String answer = vocabularyList.get(currentAnswerIndex).word; // Get the current answer
+        String answer = vocabularyList.get(currentAnswerIndex).word;
         for (char letter : answer.toLowerCase().toCharArray()) {
             letterCountMap.put(letter, letterCountMap.getOrDefault(letter, 0) + 1);
             userLetterCountMap.put(letter, 0);
         }
-        disableUnusedKeyboardButtons(); // Optionally call this here if needed
+        disableUnusedKeyboardButtons();
     }
 
     private void setupKeyboardListeners() {
@@ -160,7 +182,7 @@ public class FillVocabInBlankActivity extends AppCompatActivity {
     }
 
     private void handleLetterInput(char letter) {
-        String answer = vocabularyList.get(currentAnswerIndex).word; // Get the current answer
+        String answer = vocabularyList.get(currentAnswerIndex).word;
         char lowerCaseLetter = Character.toLowerCase(letter);
 
         if (userAnswer.length() < answer.length()) {
@@ -185,40 +207,15 @@ public class FillVocabInBlankActivity extends AppCompatActivity {
                         btnNext.setEnabled(true);
                         btnNext.setAlpha(1f);
                     }
-                } else {
-                    Toast.makeText(this, "Bạn đã nhập quá số lần cho phép cho chữ cái này!", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(this, "Chữ cái này không đúng thứ tự!", Toast.LENGTH_SHORT).show();
                 keyboard.highlightWrongLetter(lowerCaseLetter);
             }
-        } else {
-            Toast.makeText(this, "Bạn đã hoàn thành từ này!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void moveToNextAnswer() {
-        currentAnswerIndex++;
-        if (currentAnswerIndex < vocabularyList.size()) {
-            userAnswer.setLength(0);
-            letterCountMap.clear();
-            userLetterCountMap.clear();
-            keyboard.enableAllButtons();
-            setupLetterCountMap();
-            updateUserInputDisplay();
-            disableUnusedKeyboardButtons();
-            resultLayout.setVisibility(View.GONE);
-            btnNext.setEnabled(false);
-            btnNext.setAlpha(0.3f);
-            word.setText(vocabularyList.get(currentAnswerIndex).word);
-        } else {
-            updateProgressOfLesson();
         }
     }
 
     private void updateProgressOfLesson() {
         int lessonId = getIntent().getIntExtra("lesson_id", -1);
-        int newProgress = 1;
         Lesson lesson = lessonRepository.getLessonById(lessonId);
         if (lesson != null) {
             lesson.setProgress(lesson.getProgress()+1);
@@ -247,13 +244,12 @@ public class FillVocabInBlankActivity extends AppCompatActivity {
     }
 
     private void updateUserInputDisplay() {
-        // Check if vocabularyList is loaded before trying to access it
         if (vocabularyList == null || vocabularyList.isEmpty()) {
-            return; // Prevent NullPointerException
+            return;
         }
 
         StringBuilder displayString = new StringBuilder();
-        String answer = vocabularyList.get(currentAnswerIndex).word; // Get the current answer
+        String answer = vocabularyList.get(currentAnswerIndex).word;
         for (int i = 0; i < answer.length(); i++) {
             if (i < userAnswer.length()) {
                 displayString.append(userAnswer.charAt(i));
@@ -264,15 +260,5 @@ public class FillVocabInBlankActivity extends AppCompatActivity {
         userInput.setText(displayString.toString().trim());
     }
 
-    private void giveHint() {
-        String answer = vocabularyList.get(currentAnswerIndex).word; // Get the current answer
-        for (char letter : answer.toCharArray()) {
-            char lowerCaseLetter = Character.toLowerCase(letter);
-            if (userLetterCountMap.get(lowerCaseLetter) < letterCountMap.get(lowerCaseLetter)) {
-                Toast.makeText(this, "Gợi ý: " + letter, Toast.LENGTH_SHORT).show();
-                keyboard.highlightButton(lowerCaseLetter);
-                break;
-            }
-        }
-    }
+
 }
