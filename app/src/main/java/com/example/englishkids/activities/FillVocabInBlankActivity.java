@@ -216,13 +216,23 @@ public class FillVocabInBlankActivity extends AppCompatActivity {
 
     private void updateProgressOfLesson() {
         int lessonId = getIntent().getIntExtra("lesson_id", -1);
-        Lesson lesson = lessonRepository.getLessonById(lessonId);
-        if (lesson != null) {
-            lesson.setProgress(lesson.getProgress()+1);
-        }
-        finish();
-    }
+        // Access the lesson repository in a background thread
+        executorService.execute(() -> {
+            Lesson lesson = lessonRepository.getLessonById(lessonId);
+            if (lesson != null) {
+                lesson.setProgress(lesson.getProgress() + 1);
 
+
+                VocabularyRepository vocabRepository = new VocabularyRepository(this);
+                List<Vocabulary> vocabList = vocabRepository.getVocabularyByLessonId(lessonId);
+                for (Vocabulary vocab : vocabList) {
+                    vocabRepository.markAsLearned(vocab.vocab_id);
+                }
+            }
+
+            runOnUiThread(this::finish);
+        });
+    }
 
 
     private void handleDelete() {

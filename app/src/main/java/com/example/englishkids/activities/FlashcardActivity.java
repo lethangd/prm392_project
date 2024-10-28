@@ -55,7 +55,6 @@ public class FlashcardActivity extends AppCompatActivity {
         bindingView();
         bindingAction();
     }
-
     private void bindingAction() {
         btnCheckAnswer.setOnClickListener(v -> checkAnswer());
         btnNextFlashcard.setOnClickListener(v -> loadNextFlashcard());

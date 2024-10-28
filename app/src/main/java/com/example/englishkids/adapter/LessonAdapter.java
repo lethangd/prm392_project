@@ -58,7 +58,12 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
         });
 
         holder.startButton.setOnClickListener(v -> {
-            Intent intent = new Intent(context, VocabularyActivity.class);
+            Intent intent;
+            if(lesson.getProgress() > 1) {
+                 intent = new Intent(context, FlashcardActivity.class);
+            } else {
+                 intent = new Intent(context, VocabularyActivity.class);
+            }
             intent.putExtra("lesson_id", lesson.getLesson_id());
             context.startActivity(intent);
         });
