@@ -2,14 +2,15 @@ package com.example.englishkids.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -18,17 +19,16 @@ import com.example.englishkids.entity.Grammar;
 import com.example.englishkids.entity.Vocabulary;
 import com.example.englishkids.repository.GrammarRepository;
 import com.example.englishkids.repository.VocabularyRepository;
+import com.google.firebase.FirebaseApp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class FlashcardActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+public class FlashcardActivity extends AppCompatActivity {
 
     private TextView txtMeaning, txtFeedback;
     private EditText etWordInput;
@@ -41,31 +41,26 @@ public class FlashcardActivity extends AppCompatActivity implements TextToSpeech
     private boolean isVocabularyMode = true;
     private int currentVocabIndex = 0;
     private ExecutorService executorService;
-    private TextToSpeech textToSpeech;
-    private LinearLayout keyboardContainer;
-    private StringBuilder userAnswer = new StringBuilder();
-    private HashMap<Character, Integer> letterCountMap = new HashMap<>();
-    private HashMap<Character, Integer> userLetterCountMap = new HashMap<>();
+    private ImageButton btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard);
-
-        textToSpeech = new TextToSpeech(this, this);
+        FirebaseApp.initializeApp(this);
         // Initialize ExecutorService
         executorService = Executors.newSingleThreadExecutor();
         int lessonId = getIntent().getIntExtra("lesson_id", -1);
         loadLessonData(lessonId);
         bindingView();
         bindingAction();
-
     }
 
     private void bindingAction() {
         btnCheckAnswer.setOnClickListener(v -> checkAnswer());
         btnNextFlashcard.setOnClickListener(v -> loadNextFlashcard());
         btnUndo.setOnClickListener(v -> undoLastWord());
+        btnBack.setOnClickListener(v -> showExitConfirmation());
     }
 
     private void bindingView() {
@@ -78,13 +73,23 @@ public class FlashcardActivity extends AppCompatActivity implements TextToSpeech
         btnUndo = findViewById(R.id.btn_undo);
         layoutOptions = findViewById(R.id.layout_options);
         layoutSentence = findViewById(R.id.layout_sentence);
+        btnBack = findViewById(R.id.btn_back);
+    }
+
+    private void showExitConfirmation() {
+        new AlertDialog.Builder(this)
+                .setTitle("Xác nhận")
+                .setMessage("Bạn có chắc chắn muốn rời khỏi bài học?")
+                .setPositiveButton("Có", (dialog, which) -> finish())
+                .setNegativeButton("Không", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private void loadLessonData(int lessonId) {
         executorService.execute(() -> {
             VocabularyRepository vocabularyRepository = new VocabularyRepository(this);
             GrammarRepository grammarRepository = new GrammarRepository(this);
-
             vocabularyList = vocabularyRepository.getUnlearnedVocabulary(lessonId);
             grammarList = grammarRepository.getUnlearnedGrammar(lessonId);
 
@@ -100,26 +105,31 @@ public class FlashcardActivity extends AppCompatActivity implements TextToSpeech
             etWordInput.setText("");
             txtFeedback.setText("");
 
-            // Đọc từ
-            textToSpeech.speak(vocab.getWord(), TextToSpeech.QUEUE_FLUSH, null, null);
-
+            // Chỉ hiển thị các thành phần liên quan đến từ vựng
             layoutOptions.setVisibility(View.GONE);
             layoutSentence.setVisibility(View.GONE);
             etWordInput.setVisibility(View.VISIBLE);
             btnCheckAnswer.setVisibility(View.VISIBLE);
             btnUndo.setVisibility(View.GONE);
 
+            // Hiển thị ảnh từ nếu có
             if (vocab.getImagePath() != null && !vocab.getImagePath().isEmpty()) {
-                Glide.with(this).load(vocab.getImagePath()).into(imgWordImage);
+                Glide.with(this)
+                        .load(vocab.getImagePath()) // Directly load the URL
+                        .placeholder(R.drawable.ic_image_placeholder) // Placeholder while loading
+                        .error(R.drawable.ic_image_placeholder) // Fallback image if loading fails
+                        .into(imgWordImage);
             } else {
                 imgWordImage.setImageResource(R.drawable.ic_image_placeholder);
             }
         } else {
+            // Chuyển sang chế độ ngữ pháp nếu hết từ vựng
             isVocabularyMode = false;
             currentVocabIndex = 0;
             loadGrammarFlashcard();
         }
     }
+
 
     private void loadGrammarFlashcard() {
         if (currentVocabIndex < grammarList.size()) {
@@ -129,9 +139,7 @@ public class FlashcardActivity extends AppCompatActivity implements TextToSpeech
             layoutSentence.removeAllViews();
             userSentence.clear();
 
-            // Đọc câu đúng
-            textToSpeech.speak(grammar.getCorrectSentence(), TextToSpeech.QUEUE_FLUSH, null, null);
-
+            // Chỉ hiển thị các thành phần liên quan đến ngữ pháp
             layoutOptions.setVisibility(View.VISIBLE);
             layoutSentence.setVisibility(View.VISIBLE);
             etWordInput.setVisibility(View.GONE);
@@ -174,7 +182,7 @@ public class FlashcardActivity extends AppCompatActivity implements TextToSpeech
         btnUndo.setVisibility(View.VISIBLE);
 
         if (userSentence.size() == layoutOptions.getChildCount()) {
-            checkAnswer(); // Gọi hàm kiểm tra ngay khi người dùng hoàn thành sắp xếp
+            checkAnswer();
         }
     }
 
@@ -209,17 +217,12 @@ public class FlashcardActivity extends AppCompatActivity implements TextToSpeech
                 txtFeedback.setText("Chính xác!");
                 txtFeedback.setTextColor(Color.GREEN);
                 btnNextFlashcard.setVisibility(View.VISIBLE);
-                // Đọc lại từ
-                textToSpeech.speak(currentVocab.getWord(), TextToSpeech.QUEUE_FLUSH, null, null);
 
-                // Mark vocabulary as learned
                 VocabularyRepository vocabularyRepository = new VocabularyRepository(this);
                 vocabularyRepository.markAsLearned(currentVocab.getVocab_id());
             } else {
                 txtFeedback.setText("Sai rồi, thử lại!");
                 txtFeedback.setTextColor(Color.RED);
-                // Đọc lại từ đúng
-                textToSpeech.speak(currentVocab.getWord(), TextToSpeech.QUEUE_FLUSH, null, null);
             }
         } else {
             Grammar currentGrammar = grammarList.get(currentVocabIndex);
@@ -230,8 +233,6 @@ public class FlashcardActivity extends AppCompatActivity implements TextToSpeech
                 txtFeedback.setText("Chính xác!");
                 txtFeedback.setTextColor(Color.GREEN);
                 btnNextFlashcard.setVisibility(View.VISIBLE);
-                // Đọc lại câu đúng
-                textToSpeech.speak(correctSentence, TextToSpeech.QUEUE_FLUSH, null, null);
 
                 // Mark grammar as learned
                 GrammarRepository grammarRepository = new GrammarRepository(this);
@@ -239,19 +240,8 @@ public class FlashcardActivity extends AppCompatActivity implements TextToSpeech
             } else {
                 txtFeedback.setText("Sai rồi, thử lại!");
                 txtFeedback.setTextColor(Color.RED);
-                // Đọc lại câu đúng
-                textToSpeech.speak(correctSentence, TextToSpeech.QUEUE_FLUSH, null, null);
             }
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (textToSpeech != null) {
-            textToSpeech.stop();
-            textToSpeech.shutdown();
-        }
-        super.onDestroy();
     }
 
 
@@ -265,17 +255,6 @@ public class FlashcardActivity extends AppCompatActivity implements TextToSpeech
             loadVocabularyFlashcard();
         } else {
             loadGrammarFlashcard();
-        }
-    }
-    @Override
-    public void onInit(int status) {
-        if (status == TextToSpeech.SUCCESS) {
-            int result = textToSpeech.setLanguage(Locale.ENGLISH);
-            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                // Ngôn ngữ không được hỗ trợ
-            }
-        } else {
-            // Khởi tạo TTS thất bại
         }
     }
 }

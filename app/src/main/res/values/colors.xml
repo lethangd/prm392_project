@@ -11,4 +11,14 @@
     <color name="border_btn_incorrect">#fe3600</color>
     <color name="text_disable">#efefef</color>
     <color name="bg_btn_blue_light">#ebf8ff</color>
+    <color name="primaryColor">#6200EE</color>
+    <color name="secondaryColor">#03DAC5</color>
+    <color name="lightGray">#F2F2F2</color>
+    <color name="gray">#A0A0A0</color>
+    <color name="holo_green_dark">#388E3C</color>
+    <color name="background_color">#F9F9F9</color>
+    <color name="button_color">#6200EE</color>
+    <color name="button_text_color">#FFFFFF</color>
+    <color name="hint_color">#A0A0A0</color>
+    <color name="text_color">#212121</color>
 </resources>

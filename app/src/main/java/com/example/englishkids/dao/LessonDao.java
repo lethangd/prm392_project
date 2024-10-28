@@ -31,12 +31,11 @@ public interface LessonDao {
     @Query("SELECT * FROM Lesson WHERE lesson_id = :lessonId LIMIT 1")
     Lesson getLessonById(int lessonId);
 
-    @Query("SELECT l.*, " +
-            "((SELECT COUNT(*) FROM Vocabulary WHERE lesson_id = :lessonId AND isLearned = 1) + " +
+    @Query("SELECT ((SELECT COUNT(*) FROM Vocabulary WHERE lesson_id = :lessonId AND isLearned = 1) + " +
             "(SELECT COUNT(*) FROM Grammar WHERE lesson_id = :lessonId AND is_learned = 1)) * 100 / " +
             "((SELECT COUNT(*) FROM Vocabulary WHERE lesson_id = :lessonId) + " +
-            "(SELECT COUNT(*) FROM Grammar WHERE lesson_id = :lessonId)) AS progress " +
-            "FROM Lesson l WHERE l.lesson_id = :lessonId")
-    Lesson getLessonWithProgress(int lessonId);
+            "(SELECT COUNT(*) FROM Grammar WHERE lesson_id = :lessonId)) AS progress")
+    int getLessonProgress(int lessonId);
+
 
 }

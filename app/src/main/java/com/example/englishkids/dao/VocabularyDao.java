@@ -28,4 +28,8 @@ public interface VocabularyDao {
 
     @Query("UPDATE Vocabulary SET isLearned = 1 WHERE vocab_id = :vocabId")
     void markAsLearned(int vocabId);
+
+    @Query("SELECT * FROM Vocabulary WHERE vocab_id = :vocabId")
+    Vocabulary getVocabularyById(int vocabId);
+
 }
