@@ -44,6 +44,10 @@ public class LessonRepository {
         });
     }
 
+    public void updateLesson(Lesson lesson) {
+        executorService.execute(() -> lessonDao.updateLesson(lesson));
+    }
+
 
     public interface OnResultListener<T> {
         void onResult(T result);

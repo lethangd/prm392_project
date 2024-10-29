@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/white"
     tools:context=".activities.FlashcardActivity">
 
     <ImageButton
@@ -14,9 +15,9 @@
         android:layout_height="40dp"
         android:layout_gravity="start"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Quay lại"
         android:padding="8dp"
-        android:src="@drawable/ic_back_arrow"
-    android:contentDescription="Quay lại" />
+        android:src="@drawable/ic_back_arrow" />
 
     <!-- Hình ảnh từ vựng -->
     <ImageView
@@ -24,20 +25,19 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:contentDescription="Hình ảnh từ vựng"
-        android:scaleType="centerCrop"
-        android:background="@drawable/image_border" /> <!-- Add border to the image -->
+        android:scaleType="fitCenter" />
 
     <!-- Nghĩa của từ -->
     <TextView
         android:id="@+id/txt_meaning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
         android:text="Nghĩa"
+        android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/black" />
+        android:textStyle="bold" />
 
     <!-- Điền từ -->
     <EditText
@@ -45,35 +45,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:padding="12dp"
-        android:background="@drawable/edittext_background"
-    android:hint="Điền từ"
-    android:textSize="16sp"
-    android:textColor="@color/black"
-    android:textColorHint="@color/gray" />
+        android:hint="Điền từ"
+        android:padding="16dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
+        android:textSize="16sp" />
 
     <!-- Kiểm tra -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_check_answer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/primaryColor"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        app:cornerRadius="15dp"
+        android:backgroundTint="@color/bg_btn_blue"
         android:text="Kiểm tra"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="16sp"
-        style="@style/Widget.MaterialComponents.Button" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <!-- Phản hồi -->
     <TextView
         android:id="@+id/txt_feedback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
         android:text="Phản hồi"
-        android:textSize="16sp"
         android:textColor="@color/holo_green_dark"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <!-- Khu vực hiển thị câu ghép -->
@@ -86,53 +90,53 @@
             android:id="@+id/layout_sentence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/sentence_background"
             android:orientation="horizontal"
-            android:padding="8dp"
-            android:background="@drawable/sentence_background" /> <!-- Rounded background -->
+            android:padding="8dp" /> <!-- Rounded background -->
     </HorizontalScrollView>
 
-    <!-- Khu vực lựa chọn từ để ghép -->
-    <LinearLayout
+    <GridLayout
         android:id="@+id/layout_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:columnCount="3"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="8dp"
-        android:background="@drawable/options_background" /> <!-- Background for options -->
+        android:padding="8dp" />
 
     <!-- Nút Xóa Từ Cuối -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_undo"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_gravity="center"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/secondaryColor"
         android:text="Xóa Từ Cuối"
         android:textColor="@color/white"
-        style="@style/Widget.MaterialComponents.Button"
         android:visibility="gone" />
 
     <!-- Nút Tiếp theo -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_next_flashcard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/primaryColor"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#42cd6e"
         android:text="Tiếp theo"
+        android:textAllCaps="false"
         android:textColor="@color/white"
-        style="@style/Widget.MaterialComponents.Button" />
+        android:textSize="25sp"
+        android:visibility="visible"
+        android:layout_gravity="center"/>
 
     <Button
         android:id="@+id/btn_relearn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Học lại"
-        android:visibility="gone"
-    android:layout_marginTop="16dp" />
+        android:visibility="gone" />
 
 </LinearLayout>

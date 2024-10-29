@@ -51,15 +51,19 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
 
                 // Ensure UI updates run on the main thread
                 ((Activity) context).runOnUiThread(() -> {
-                    updateStartButton(holder, progress); // Update button text based on progress
-                    disableButtonIfPreviousIncomplete(holder, position); // Disable button if previous lesson incomplete
-                    updateStarRating(holder, progress); // Update star rating based on progress
+                    updateStartButton(holder, progress);
+                    disableButtonIfPreviousIncomplete(holder, position);
+                    if (progress >0) {
+                        updateStarRating(holder, 2);
+                    }else{
+                        updateStarRating(holder, lesson.getStudyCount());
+                    }
                 });
         });
 
         holder.startButton.setOnClickListener(v -> {
             Intent intent;
-            if(lesson.getProgress() > 1) {
+            if(lesson.getStudyCount() > 0) {
                  intent = new Intent(context, FlashcardActivity.class);
             } else {
                  intent = new Intent(context, VocabularyActivity.class);
@@ -91,9 +95,9 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
 
     // Helper Method to Set Star Rating Based on Progress
     private void updateStarRating(LessonViewHolder holder, int progress) {
-        holder.star1.setImageResource(progress >= 34 ? R.drawable.ic_star_filled : R.drawable.ic_star_empty);
-        holder.star2.setImageResource(progress >= 67 ? R.drawable.ic_star_filled : R.drawable.ic_star_empty);
-        holder.star3.setImageResource(progress == 100 ? R.drawable.ic_star_filled : R.drawable.ic_star_empty);
+        holder.star1.setImageResource(progress >= 1 ? R.drawable.ic_star_filled : R.drawable.ic_star_empty);
+        holder.star2.setImageResource(progress >= 2 ? R.drawable.ic_star_filled : R.drawable.ic_star_empty);
+        holder.star3.setImageResource(progress >= 3 ? R.drawable.ic_star_filled : R.drawable.ic_star_empty);
     }
 
 

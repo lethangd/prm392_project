@@ -220,14 +220,8 @@ public class FillVocabInBlankActivity extends AppCompatActivity {
         executorService.execute(() -> {
             Lesson lesson = lessonRepository.getLessonById(lessonId);
             if (lesson != null) {
-                lesson.setProgress(lesson.getProgress() + 1);
-
-
-                VocabularyRepository vocabRepository = new VocabularyRepository(this);
-                List<Vocabulary> vocabList = vocabRepository.getVocabularyByLessonId(lessonId);
-                for (Vocabulary vocab : vocabList) {
-                    vocabRepository.markAsLearned(vocab.vocab_id);
-                }
+                lesson.setStudyCount(lesson.getStudyCount() + 1);
+                lessonRepository.updateLesson(lesson);
             }
 
             runOnUiThread(this::finish);

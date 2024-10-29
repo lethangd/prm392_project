@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,7 +35,8 @@ public class FlashcardActivity extends AppCompatActivity {
     private EditText etWordInput;
     private ImageView imgWordImage;
     private Button btnCheckAnswer, btnNextFlashcard, btnUndo;
-    private LinearLayout layoutOptions, layoutSentence;
+    private LinearLayout layoutSentence;
+    private GridLayout layoutOptions;
     private final List<String> userSentence = new ArrayList<>();
     private List<Vocabulary> vocabularyList;
     private List<Grammar> grammarList;
@@ -97,32 +99,29 @@ public class FlashcardActivity extends AppCompatActivity {
     }
 
     private void loadVocabularyFlashcard() {
-        // Kiểm tra chế độ từ vựng
         if (currentVocabIndex < vocabularyList.size()) {
             Vocabulary vocab = vocabularyList.get(currentVocabIndex);
             txtMeaning.setText(vocab.getMeaning());
             etWordInput.setText("");
             txtFeedback.setText("");
 
-            // Chỉ hiển thị các thành phần liên quan đến từ vựng
+            imgWordImage.setVisibility(View.VISIBLE);
             layoutOptions.setVisibility(View.GONE);
             layoutSentence.setVisibility(View.GONE);
             etWordInput.setVisibility(View.VISIBLE);
             btnCheckAnswer.setVisibility(View.VISIBLE);
             btnUndo.setVisibility(View.GONE);
 
-            // Hiển thị ảnh từ nếu có
             if (vocab.getImagePath() != null && !vocab.getImagePath().isEmpty()) {
                 Glide.with(this)
-                        .load(vocab.getImagePath()) // Directly load the URL
-                        .placeholder(R.drawable.ic_image_placeholder) // Placeholder while loading
-                        .error(R.drawable.ic_image_placeholder) // Fallback image if loading fails
+                        .load(vocab.getImagePath())
+                        .placeholder(R.drawable.ic_image_placeholder)
+                        .error(R.drawable.ic_image_placeholder)
                         .into(imgWordImage);
             } else {
                 imgWordImage.setImageResource(R.drawable.ic_image_placeholder);
             }
         } else {
-            // Chuyển sang chế độ ngữ pháp nếu hết từ vựng
             isVocabularyMode = false;
             currentVocabIndex = 0;
             loadGrammarFlashcard();
@@ -138,7 +137,7 @@ public class FlashcardActivity extends AppCompatActivity {
             layoutSentence.removeAllViews();
             userSentence.clear();
 
-            // Chỉ hiển thị các thành phần liên quan đến ngữ pháp
+            imgWordImage.setVisibility(View.GONE);
             layoutOptions.setVisibility(View.VISIBLE);
             layoutSentence.setVisibility(View.VISIBLE);
             etWordInput.setVisibility(View.GONE);

@@ -11,6 +11,7 @@
     <color name="border_btn_incorrect">#fe3600</color>
     <color name="text_disable">#efefef</color>
     <color name="bg_btn_blue_light">#ebf8ff</color>
+    <color name="bg_btn_blue">#004EFF</color>
     <color name="primaryColor">#6200EE</color>
     <color name="secondaryColor">#03DAC5</color>
     <color name="lightGray">#F2F2F2</color>

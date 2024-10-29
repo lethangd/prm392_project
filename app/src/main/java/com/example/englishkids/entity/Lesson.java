@@ -18,14 +18,27 @@ public class Lesson {
 
     @ColumnInfo(name = "lesson_type")
     public String lessonType;
+
+    @ColumnInfo(name = "study_count")
+    public int studyCount =0;
+
     @Ignore
-    //    @ColumnInfo(name = "lesson_progress")
-    private int progress = 0;
+    private int progress;
+
 
     public Lesson(String lessonName, String description, String lessonType) {
         this.lessonName = lessonName;
         this.description = description;
         this.lessonType = lessonType;
+        this.studyCount = 0;
+    }
+
+    public int getStudyCount() {
+        return studyCount;
+    }
+
+    public void setStudyCount(int studyCount) {
+        this.studyCount = studyCount;
     }
 
     public int getLesson_id() {

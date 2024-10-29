@@ -3,6 +3,7 @@ package com.example.englishkids.dao;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 
 import com.example.englishkids.entity.Grammar;
@@ -24,6 +25,9 @@ public interface LessonDao {
 
     @Insert
     void insertGrammar(Grammar grammar);
+
+    @Update
+    void updateLesson(Lesson lesson);
 
     @Query("SELECT * FROM Lesson")
     List<Lesson> getAllLessons();

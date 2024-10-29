@@ -11,7 +11,7 @@ import com.example.englishkids.entity.GrammarType;
 import com.example.englishkids.entity.Lesson;
 import com.example.englishkids.entity.Vocabulary;
 
-@Database(entities = {Grammar.class, GrammarType.class, Vocabulary.class, Lesson.class}, version = 4)
+@Database(entities = {Grammar.class, GrammarType.class, Vocabulary.class, Lesson.class}, version = 5)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
