@@ -42,6 +42,8 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.recyclerview)
     implementation(libs.play.services.auth)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
     annotationProcessor(libs.room.compiler)
     implementation(libs.firebase.firestore)
     implementation("com.github.bumptech.glide:glide:4.16.0")

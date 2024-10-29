@@ -66,16 +66,16 @@ public class DummiesData {
 
     private static void insertLessons(AppDatabase db) {
         List<Lesson> lessons = new ArrayList<>();
-        lessons.add(new Lesson("Lesson 1", "Thì hiện tại đơn", "Grammar"));
-        lessons.add(new Lesson("Lesson 2", "Thì hiện tại tiếp diễn", "Grammar"));
-        lessons.add(new Lesson("Lesson 3", "Thì quá khứ đơn", "Grammar"));
-        lessons.add(new Lesson("Lesson 4", "Thì tương lai đơn", "Grammar"));
-        lessons.add(new Lesson("Lesson 5", "Thì hiện tại hoàn thành", "Grammar"));
-        lessons.add(new Lesson("Lesson 6", "Thì quá khứ hoàn thành", "Grammar"));
-        lessons.add(new Lesson("Lesson 7", "Thì tương lai hoàn thành", "Grammar"));
-        lessons.add(new Lesson("Lesson 8", "Thì hiện tại hoàn thành tiếp diễn", "Grammar"));
-        lessons.add(new Lesson("Lesson 9", "Thì quá khứ hoàn thành tiếp diễn", "Grammar"));
-        lessons.add(new Lesson("Lesson 10", "Câu điều kiện", "Grammar"));
+        lessons.add(new Lesson("Bài học 1", "Thì hiện tại đơn", "Grammar"));
+        lessons.add(new Lesson("Bài học 2", "Thì hiện tại tiếp diễn", "Grammar"));
+        lessons.add(new Lesson("Bài học 3", "Thì quá khứ đơn", "Grammar"));
+        lessons.add(new Lesson("Bài học 4", "Thì tương lai đơn", "Grammar"));
+        lessons.add(new Lesson("Bài học 5", "Thì hiện tại hoàn thành", "Grammar"));
+        lessons.add(new Lesson("Bài học 6", "Thì quá khứ hoàn thành", "Grammar"));
+        lessons.add(new Lesson("Bài học 7", "Thì tương lai hoàn thành", "Grammar"));
+        lessons.add(new Lesson("Bài học 8", "Thì hiện tại hoàn thành tiếp diễn", "Grammar"));
+        lessons.add(new Lesson("Bài học 9", "Thì quá khứ hoàn thành tiếp diễn", "Grammar"));
+        lessons.add(new Lesson("Bài học 10", "Câu điều kiện", "Grammar"));
         db.lessonDao().insertAll(lessons);
     }
 
