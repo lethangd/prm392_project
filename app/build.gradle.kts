@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.room.common)
     implementation(libs.room.runtime)
     implementation(libs.recyclerview)
+    implementation(libs.play.services.auth)
     annotationProcessor(libs.room.compiler)
     implementation(libs.firebase.firestore)
     implementation("com.github.bumptech.glide:glide:4.16.0")
@@ -51,7 +52,13 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.airbnb.android:lottie:6.6.0")
     implementation("com.google.firebase:firebase-firestore:24.3.0")
+    //Authentication with gg
+    implementation("com.google.android.gms:play-services-auth:20.0.5")
+    implementation("com.facebook.android:facebook-android-sdk:17.0.1")
+    implementation("androidx.work:work-runtime-ktx:2.7.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
+
+

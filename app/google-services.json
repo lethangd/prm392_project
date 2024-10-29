@@ -12,7 +12,20 @@
           "package_name": "com.example.englishkids"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "525618816140-ks0qh6aos9cetolqh263ckgsb1gjcuo7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.englishkids",
+            "certificate_hash": "583ab088b93f0ab3af7a1ab27242b4041c4cb2cb"
+          }
+        },
+        {
+          "client_id": "525618816140-02lg8uv1nn3jsl833sovf0m5hdg5bsb0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBlAZ9BIG7gEnIri8t_dc8tinjn4E-xwM0"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "525618816140-02lg8uv1nn3jsl833sovf0m5hdg5bsb0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
