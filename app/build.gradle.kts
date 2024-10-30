@@ -59,6 +59,7 @@ dependencies {
     implementation("com.facebook.android:facebook-android-sdk:17.0.1")
     implementation("androidx.work:work-runtime-ktx:2.7.1")
     implementation("com.google.android.material:material:1.12.0")
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

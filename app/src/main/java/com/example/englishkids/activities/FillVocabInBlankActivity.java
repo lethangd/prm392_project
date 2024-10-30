@@ -114,7 +114,7 @@ public class FillVocabInBlankActivity extends AppCompatActivity {
             resultLayout.setVisibility(View.GONE);
             btnNext.setEnabled(false);
             btnNext.setAlpha(0.3f);
-            word.setText(vocabularyList.get(currentAnswerIndex).word);
+            word.setText(vocabularyList.get(currentAnswerIndex).getMeaning());
         } else {
             updateProgressOfLesson();
         }
