@@ -2,8 +2,6 @@ package com.example.englishkids.utils;
 
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -12,7 +10,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ScoreManager {
@@ -31,35 +28,24 @@ public class ScoreManager {
         void onFailure(Exception e);
     }
 
-
     /**
      * Fetches the scores of all users in the userProgress collection by counting the learned items
-     * in each user's learnedGrammar and learnedVocabulary collections. Returns a map of user IDs and scores.
+     * in each user's learnedGrammar and learnedVocabulary collections. Returns a map of user names and scores.
      */
     public void getAllUsersScores(Callback<Map<String, Integer>> callback) {
-        db.collection("userProgress").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    QuerySnapshot querySnapshot = task.getResult();
-                    List<DocumentSnapshot> documents = querySnapshot.getDocuments();
-                    for (DocumentSnapshot document : documents) {
-
-                            Log.d("Firestore", "User: " + document.getId()  );
-                    }
-                } else {
-                    System.out.println("Error getting documents: " + task.getException());
-                }
-            };
-        });
-        db.collection("userProgress")
+        db.collection("user")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
                         Map<String, Integer> userScores = new HashMap<>();
-                        int num = task.getResult().size();
+
                         for (QueryDocumentSnapshot userDoc : task.getResult()) {
                             String userId = userDoc.getId();
+
+                            final String userName = userDoc.getString("userName") != null
+                                    ? userDoc.getString("userName")
+                                    : ("Người dùng ẩn danh");
+                            Log.d("Firestore", "User: " + userId  + " - " + userName);
                             CollectionReference learnedVocabulary = userDoc.getReference().collection("learnedVocabulary");
                             CollectionReference learnedGrammar = userDoc.getReference().collection("learnedGrammar");
 
@@ -70,7 +56,7 @@ public class ScoreManager {
                                 learnedGrammar.get().addOnSuccessListener(grammarSnapshot -> {
                                     int grammarCount = grammarSnapshot.size();
                                     int totalScore = vocabCount + grammarCount;
-                                    userScores.put(userId, totalScore);
+                                    userScores.put(userName, totalScore); // Use userName as key instead of userId
 
                                     // Callback when the last document has been processed
                                     if (userScores.size() == task.getResult().size()) {
@@ -84,5 +70,4 @@ public class ScoreManager {
                     }
                 });
     }
-
 }

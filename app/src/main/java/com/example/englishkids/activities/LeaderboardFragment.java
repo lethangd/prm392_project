@@ -1,18 +1,24 @@
 package com.example.englishkids.activities;
+
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.englishkids.R;
+import com.example.englishkids.adapter.LeaderboardAdapter;
 import com.example.englishkids.utils.ScoreManager;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +28,7 @@ public class LeaderboardFragment extends Fragment {
     private RecyclerView recyclerView;
     private LeaderboardAdapter adapter;
     private ScoreManager scoreManager;
+    private FirebaseFirestore firestore;
     private String currentUserId;
 
     @Nullable
@@ -34,11 +41,51 @@ public class LeaderboardFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         scoreManager = new ScoreManager();
+        firestore = FirebaseFirestore.getInstance();
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        loadLeaderboard();
+        checkAndPromptUserName();
 
         return view;
+    }
+
+    private void checkAndPromptUserName() {
+        DocumentReference userDocRef = firestore.collection("user").document(currentUserId);
+        userDocRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.contains("userName")) {
+                loadLeaderboard();
+            } else {
+                promptForUserName(userDocRef);
+            }
+        }).addOnFailureListener(e ->
+                Toast.makeText(getContext(), "Failed to check user name", Toast.LENGTH_SHORT).show()
+        );
+    }
+
+    private void promptForUserName(DocumentReference userDocRef) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Nhập tên của bạn để hiển thị trên bảng xếp hạng");
+
+        final EditText input = new EditText(getContext());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton("Tiếp tục", (dialog, which) -> {
+            String userName = input.getText().toString().trim();
+            if (!userName.isEmpty()) {
+                userDocRef.update("userName", userName)
+                        .addOnSuccessListener(aVoid -> loadLeaderboard())
+                        .addOnFailureListener(e ->
+                                Toast.makeText(getContext(), "Failed to save user name", Toast.LENGTH_SHORT).show()
+                        );
+            } else {
+                Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show();
+                promptForUserName(userDocRef);
+            }
+        });
+
+        builder.setCancelable(false); // Prevent closing without entering a name
+        builder.show();
     }
 
     private void loadLeaderboard() {
@@ -46,7 +93,7 @@ public class LeaderboardFragment extends Fragment {
             @Override
             public void onSuccess(Map<String, Integer> userScores) {
                 List<Map.Entry<String, Integer>> scoreList = new ArrayList<>(userScores.entrySet());
-                scoreList.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue())); // Sort by score
+                scoreList.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
 
                 adapter = new LeaderboardAdapter(scoreList, currentUserId);
                 recyclerView.setAdapter(adapter);
