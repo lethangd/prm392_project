@@ -10,8 +10,11 @@ import com.example.englishkids.entity.Vocabulary;
 import com.example.englishkids.entity.VocabularyProgress;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -48,12 +51,27 @@ public class VocabularyRepository {
         executorService.execute(() -> {
             vocabularyDao.markAsLearned(vocabId);
         });
-        firestore.collection("userProgress").document(userId)
-                .collection("learnedVocabulary").document(String.valueOf(vocabId))
-                .set(new VocabularyProgress(true))  // or use a simple Map<String, Object>
-                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Vocabulary progress saved"))
-                .addOnFailureListener(e -> Log.e("Firestore", "Failed to save progress", e));
+
+        // Đầu tiên, tạo tài liệu gốc nếu chưa tồn tại
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("initialized", true); // Thêm trường dummy để tài liệu tồn tại
+
+        firestore.collection("user").document(userId)
+                .set(userData, SetOptions.merge())  // Chỉ thêm nếu chưa tồn tại
+                .addOnSuccessListener(aVoid -> {
+                    // Sau đó thêm vào subcollection learnedVocabulary
+                    Map<String, Object> vocabData = new HashMap<>();
+                    vocabData.put("learned", true);
+
+                    firestore.collection("user").document(userId)
+                            .collection("learnedVocabulary").document(String.valueOf(vocabId))
+                            .set(vocabData)
+                            .addOnSuccessListener(v -> Log.d("Firestore", "Vocabulary progress saved"))
+                            .addOnFailureListener(e -> Log.e("Firestore", "Failed to save progress", e));
+                })
+                .addOnFailureListener(e -> Log.e("Firestore", "Failed to initialize user document", e));
     }
+
 
 
     private static class InsertVocabularyAsyncTask extends AsyncTask<Vocabulary, Void, Void> {

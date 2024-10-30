@@ -1,10 +1,18 @@
 package com.example.englishkids.utils;
 
+import android.util.Log;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ScoreManager {
@@ -23,90 +31,58 @@ public class ScoreManager {
         void onFailure(Exception e);
     }
 
-    /**
-     * Fetches the current user's score by counting the learned items in both learnedGrammar
-     * and learnedVocabulary collections and returns it via a callback.
-     */
-    public void getCurrentUserScore(Callback<Integer> callback) {
-        String userId = auth.getCurrentUser().getUid();
-
-        db.collection("userProgress")
-                .document(userId)
-                .collection("learnedGrammar")
-                .get()
-                .addOnCompleteListener(taskGrammar -> {
-                    if (taskGrammar.isSuccessful()) {
-                        int learnedGrammarCount = taskGrammar.getResult().size();
-
-                        db.collection("userProgress")
-                                .document(userId)
-                                .collection("learnedVocabulary")
-                                .get()
-                                .addOnCompleteListener(taskVocab -> {
-                                    if (taskVocab.isSuccessful()) {
-                                        int learnedVocabularyCount = taskVocab.getResult().size();
-                                        int totalScore = learnedGrammarCount + learnedVocabularyCount;
-
-                                        callback.onSuccess(totalScore);
-                                    } else {
-                                        callback.onFailure(taskVocab.getException());
-                                    }
-                                });
-                    } else {
-                        callback.onFailure(taskGrammar.getException());
-                    }
-                });
-    }
 
     /**
      * Fetches the scores of all users in the userProgress collection by counting the learned items
      * in each user's learnedGrammar and learnedVocabulary collections. Returns a map of user IDs and scores.
      */
     public void getAllUsersScores(Callback<Map<String, Integer>> callback) {
+        db.collection("userProgress").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot querySnapshot = task.getResult();
+                    List<DocumentSnapshot> documents = querySnapshot.getDocuments();
+                    for (DocumentSnapshot document : documents) {
+
+                            Log.d("Firestore", "User: " + document.getId()  );
+                    }
+                } else {
+                    System.out.println("Error getting documents: " + task.getException());
+                }
+            };
+        });
         db.collection("userProgress")
                 .get()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                    if (task.isSuccessful() && task.getResult() != null) {
                         Map<String, Integer> userScores = new HashMap<>();
-
-                        for (DocumentSnapshot userDoc : task.getResult()) {
+                        int num = task.getResult().size();
+                        for (QueryDocumentSnapshot userDoc : task.getResult()) {
                             String userId = userDoc.getId();
+                            CollectionReference learnedVocabulary = userDoc.getReference().collection("learnedVocabulary");
+                            CollectionReference learnedGrammar = userDoc.getReference().collection("learnedGrammar");
 
-                            db.collection("userProgress")
-                                    .document(userId)
-                                    .collection("learnedGrammar")
-                                    .get()
-                                    .addOnCompleteListener(taskGrammar -> {
-                                        if (taskGrammar.isSuccessful()) {
-                                            int learnedGrammarCount = taskGrammar.getResult().size();
+                            // Count learned vocab and grammar for each user
+                            learnedVocabulary.get().addOnSuccessListener(vocabSnapshot -> {
+                                int vocabCount = vocabSnapshot.size();
 
-                                            db.collection("userProgress")
-                                                    .document(userId)
-                                                    .collection("learnedVocabulary")
-                                                    .get()
-                                                    .addOnCompleteListener(taskVocab -> {
-                                                        if (taskVocab.isSuccessful()) {
-                                                            int learnedVocabularyCount = taskVocab.getResult().size();
-                                                            int totalScore = learnedGrammarCount + learnedVocabularyCount;
+                                learnedGrammar.get().addOnSuccessListener(grammarSnapshot -> {
+                                    int grammarCount = grammarSnapshot.size();
+                                    int totalScore = vocabCount + grammarCount;
+                                    userScores.put(userId, totalScore);
 
-                                                            userScores.put(userId, totalScore);
-
-                                                            // Check if all users' scores have been fetched
-                                                            if (userScores.size() == task.getResult().size()) {
-                                                                callback.onSuccess(userScores);
-                                                            }
-                                                        } else {
-                                                            callback.onFailure(taskVocab.getException());
-                                                        }
-                                                    });
-                                        } else {
-                                            callback.onFailure(taskGrammar.getException());
-                                        }
-                                    });
+                                    // Callback when the last document has been processed
+                                    if (userScores.size() == task.getResult().size()) {
+                                        callback.onSuccess(userScores);
+                                    }
+                                });
+                            });
                         }
                     } else {
                         callback.onFailure(task.getException());
                     }
                 });
     }
+
 }

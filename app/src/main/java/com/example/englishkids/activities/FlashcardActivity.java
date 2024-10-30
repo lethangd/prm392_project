@@ -91,6 +91,7 @@ public class FlashcardActivity extends AppCompatActivity {
         executorService.execute(() -> {
             VocabularyRepository vocabularyRepository = new VocabularyRepository(this);
             GrammarRepository grammarRepository = new GrammarRepository(this);
+            List<Vocabulary> vocabularyListt = vocabularyRepository.getVocabularyByLessonId(lessonId);
             vocabularyList = vocabularyRepository.getUnlearnedVocabulary(lessonId);
             grammarList = grammarRepository.getUnlearnedGrammar(lessonId);
 

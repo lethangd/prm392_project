@@ -12,8 +12,11 @@ import com.example.englishkids.entity.GrammarProgress;
 import com.example.englishkids.entity.Vocabulary;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,12 +48,27 @@ public class GrammarRepository {
 
     public void markAsLearned(int grammarId) {
         executorService.execute(() -> grammarDao.markAsLearned(grammarId));
-        firestore.collection("userProgress").document(userId)
-                .collection("learnedGrammar").document(String.valueOf(grammarId))
-                .set(new GrammarProgress(true))
-                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Grammar progress saved"))
-                .addOnFailureListener(e -> Log.e("Firestore", "Failed to save progress", e));
+
+        // Tạo tài liệu gốc nếu chưa tồn tại
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("initialized", true); // Thêm trường dummy để tài liệu tồn tại
+
+        firestore.collection("user").document(userId)
+                .set(userData, SetOptions.merge())  // Chỉ thêm nếu chưa tồn tại
+                .addOnSuccessListener(aVoid -> {
+                    // Sau đó thêm vào subcollection learnedGrammar
+                    Map<String, Object> grammarData = new HashMap<>();
+                    grammarData.put("learned", true);
+
+                    firestore.collection("user").document(userId)
+                            .collection("learnedGrammar").document(String.valueOf(grammarId))
+                            .set(grammarData)
+                            .addOnSuccessListener(v -> Log.d("Firestore", "Grammar progress saved"))
+                            .addOnFailureListener(e -> Log.e("Firestore", "Failed to save grammar progress", e));
+                })
+                .addOnFailureListener(e -> Log.e("Firestore", "Failed to initialize user document", e));
     }
+
     public List<Grammar> getUnlearnedGrammar(int lessonId) {
         return  grammarDao.getUnlearnedGrammar(lessonId);
     }

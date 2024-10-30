@@ -233,7 +233,7 @@ public class DummiesData {
 
     private static void syncLearnedDataFromFirestore(AppDatabase db, FirebaseFirestore firestore, String userId) {
         // Sync learned Vocabulary
-        firestore.collection("userProgress").document(userId).collection("learnedVocabulary")
+        firestore.collection("user").document(userId).collection("learnedVocabulary")
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     for (QueryDocumentSnapshot document : querySnapshot) {
@@ -248,7 +248,7 @@ public class DummiesData {
                 .addOnFailureListener(e -> Log.e(TAG, "Error syncing vocabulary progress", e));
 
         // Sync learned Grammar
-        firestore.collection("userProgress").document(userId).collection("learnedGrammar")
+        firestore.collection("user").document(userId).collection("learnedGrammar")
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     for (QueryDocumentSnapshot document : querySnapshot) {
