@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -47,9 +48,11 @@ import java.util.concurrent.Executors;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
-    private Button btnLogin, btnRegister;
+    private Button btnLogin;
+    private TextView btnRegister;
     private SignInButton btnLoginViaGoogle;
     private LoginButton btnLoginViaFacebook;
+    private Button btnFacebookView, btnGoogleView;
 
     private FirebaseAuth firebaseAuth;
     private AppDatabase db;
@@ -78,6 +81,8 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         btnLoginViaGoogle = findViewById(R.id.btnGoogleSignIn);
         btnLoginViaFacebook = findViewById(R.id.login_button_facebook);
+        btnFacebookView = findViewById(R.id.btn_login_facebook_view);
+        btnGoogleView = findViewById(R.id.btn_login_google_view);
     }
 
     private void initializeComponents() {
@@ -90,6 +95,17 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(this::onClickRegisterUser);
         btnLoginViaGoogle.setOnClickListener(this::loginViaGoogle);
         btnLoginViaFacebook.setOnClickListener(this::loginViaFacebook);
+        btnFacebookView.setOnClickListener(this::fakeClickFacebook);
+        btnGoogleView.setOnClickListener(this::fakeClickGoogle);
+    }
+
+    private void fakeClickGoogle(View view) {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void fakeClickFacebook(View view) {
+        btnLoginViaFacebook.performClick();
     }
 
     private void loginViaFacebook(View view) {

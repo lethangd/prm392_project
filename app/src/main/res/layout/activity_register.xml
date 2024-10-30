@@ -4,50 +4,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="20dp"
     android:background="@color/background_color"
     android:gravity="center"
     tools:context=".activities.RegisterActivity">
 
-<TextView
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Register"
-android:textSize="28sp"
-android:textColor="@color/primaryColor"
-android:textStyle="bold"
-android:layout_marginBottom="24dp" />
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đăng kí"
+        android:textSize="28sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp" />
 
-<EditText
-android:id="@+id/etRegisterUsername"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:hint="Email"
-android:padding="12dp"
-android:background="@drawable/edittext_background"
-android:textColor="@color/text_color"
-android:textColorHint="@color/hint_color"
-android:layout_marginBottom="16dp" />
+        <EditText
+            android:id="@+id/etRegisterUsername"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/button_oval"
+            android:hint="Email"
+            android:padding="20dp"
+            android:layout_margin="10dp"
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/hint_color" />
 
-<EditText
-android:id="@+id/etRegisterPassword"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:hint="Password"
-android:inputType="textPassword"
-android:padding="12dp"
-android:background="@drawable/edittext_background"
-android:textColor="@color/text_color"
-android:textColorHint="@color/hint_color"
-android:layout_marginBottom="24dp" />
+        <EditText
+            android:id="@+id/etRegisterPassword"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_oval"
+            android:hint="Mật khẩu"
+            android:inputType="textPassword"
+            android:padding="20dp"
+            android:layout_margin="10dp"
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/hint_color" />
 
-<Button
-android:id="@+id/btnRegisterUser"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:text="Register"
-android:backgroundTint="@color/primaryColor"
-android:textColor="@android:color/white"
-android:padding="12dp"
-android:fontFamily="sans-serif-medium" />
-    </LinearLayout>
+        <EditText
+            android:id="@+id/etReRegisterPassword"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_oval"
+            android:hint="Nhập lại mật khẩu"
+            android:inputType="textPassword"
+            android:padding="20dp"
+            android:layout_margin="10dp"
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/hint_color" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRegisterUser"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="Đăng kí"
+            android:background="@drawable/button_oval_pressed"
+            android:textColor="@color/black"
+            android:padding="12dp"
+            android:layout_margin="10dp"
+            android:fontFamily="sans-serif-medium" />
+</LinearLayout>
