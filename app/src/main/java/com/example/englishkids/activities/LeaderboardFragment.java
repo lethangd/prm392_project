@@ -2,6 +2,7 @@ package com.example.englishkids.activities;
 
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class LeaderboardFragment extends Fragment {
     private ScoreManager scoreManager;
     private FirebaseFirestore firestore;
     private String currentUserId;
+    private String currentUserName;
 
     @Nullable
     @Override
@@ -45,8 +47,29 @@ public class LeaderboardFragment extends Fragment {
         currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         checkAndPromptUserName();
+        loadCurrentUserAndLeaderboard();
 
         return view;
+    }
+
+    private void loadCurrentUserAndLeaderboard() {
+        FirebaseFirestore.getInstance()
+                .collection("user") // Adjust to the Firestore path where usernames are stored
+                .document(currentUserId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        currentUserName = documentSnapshot.getString("userName"); // Retrieve "username" field
+                        loadLeaderboard(); // Proceed to load leaderboard after fetching username
+                    } else {
+                        Log.e("Firestore", "Username not found for current user.");
+                        Toast.makeText(getContext(), "Failed to load username.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firestore", "Error fetching username", e);
+                    Toast.makeText(getContext(), "Failed to load username.", Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void checkAndPromptUserName() {
@@ -95,7 +118,7 @@ public class LeaderboardFragment extends Fragment {
                 List<Map.Entry<String, Integer>> scoreList = new ArrayList<>(userScores.entrySet());
                 scoreList.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
 
-                adapter = new LeaderboardAdapter(scoreList, currentUserId);
+                adapter = new LeaderboardAdapter(scoreList, currentUserName);
                 recyclerView.setAdapter(adapter);
             }
 

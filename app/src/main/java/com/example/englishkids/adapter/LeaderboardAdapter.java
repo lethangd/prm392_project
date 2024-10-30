@@ -36,7 +36,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         String userId = entry.getKey();
         int score = entry.getValue();
 
-        holder.userNameTextView.setText("User " + userId); // Display user ID or username if available
+        holder.userNameTextView.setText( userId);
         holder.userScoreTextView.setText(String.valueOf(score));
 
         // Highlight current user's score
