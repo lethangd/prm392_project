@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_ui"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="40dp">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_email_login"
+        android:background="@drawable/button_oval"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="Đăng nhập bằng Email"
+
+        android:layout_marginBottom="10dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_email_signup"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/button_oval"
+        android:layout_height="80dp"
+        android:text="Đăng ký"/>
+</LinearLayout>

@@ -2,7 +2,7 @@
     <corners android:radius="@dimen/button_radius" />
     <solid android:color="@color/bg_btn" />
 
-<!--    <stroke-->
-<!--        android:width="2dp"-->
-<!--        android:color="@color/border_btn_disable" />-->
+    <stroke
+        android:width="2dp"
+        android:color="@color/border_btn_disable" />
 </shape>
