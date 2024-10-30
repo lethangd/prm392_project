@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_practice:
-                            selectedFragment = new PracticeFragment();
+                            selectedFragment = new LeaderboardFragment();
                             break;
                         case R.id.nav_settings:
                             selectedFragment = new SettingsFragment();
