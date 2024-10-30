@@ -17,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.englishkids.R;
-import com.facebook.login.LoginManager;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -94,7 +93,6 @@ public class SettingsFragment extends Fragment {
 
     private void logout() {
         firebaseAuth.signOut();
-        LoginManager.getInstance().logOut();
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("isLoggedIn");
@@ -111,4 +109,5 @@ public class SettingsFragment extends Fragment {
         startActivity(intent);
         getActivity().finish();
     }
+    
 }
