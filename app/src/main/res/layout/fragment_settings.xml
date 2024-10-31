@@ -1,67 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="20dp"
     android:background="@color/background_color"
-    android:gravity="center">
+    android:gravity="center"
+    >
 
-<TextView
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Change Password"
-android:textSize="24sp"
-android:textColor="@color/primaryColor"
-    android:layout_marginBottom="24dp"
-    android:textStyle="bold" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đổi mật khẩu"
+        android:textSize="28sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp" />
 
-<EditText
-android:id="@+id/editTextCurrentPassword"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:hint="Current Password"
-android:inputType="textPassword"
-android:background="@drawable/edittext_background"
-    android:padding="12dp"
-    android:textColor="@color/text_color"
-    android:textColorHint="@color/hint_color" />
+    <EditText
+        android:id="@+id/editTextCurrentPassword"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/button_oval"
+        android:hint="Mật khẩu hiện tại"
+        android:inputType="textPassword"
+        android:padding="20dp"
+        android:layout_margin="10dp"
+        android:textColor="@color/text_color"
+        android:textColorHint="@color/hint_color" />
 
-<EditText
-android:id="@+id/editTextNewPassword"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:hint="New Password"
-android:inputType="textPassword"
-android:background="@drawable/edittext_background"
-    android:padding="12dp"
-    android:textColor="@color/text_color"
-    android:textColorHint="@color/hint_color"
-    android:layout_marginTop="16dp" />
+    <EditText
+        android:id="@+id/editTextNewPassword"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/button_oval"
+        android:hint="Mật khẩu mới"
+        android:inputType="textPassword"
+        android:padding="20dp"
+        android:layout_margin="10dp"
+        android:textColor="@color/text_color"
+        android:textColorHint="@color/hint_color"
+        android:layout_marginTop="16dp" />
 
-<Button
-android:id="@+id/buttonChangePassword"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:text="Change Password"
-android:layout_marginTop="24dp"
-android:backgroundTint="@color/button_color"
-    android:textColor="@android:color/white"
-    android:padding="12dp"
-    android:drawablePadding="8dp"
-    android:drawableStart="@drawable/ic_lock"
-    android:fontFamily="sans-serif-medium" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonChangePassword"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="Đổi mật khẩu"
+        android:background="@drawable/button_oval"
+        android:textColor="@color/black"
+        android:padding="20dp"
+        android:layout_margin="10dp"
+        android:fontFamily="sans-serif-medium" />
 
-<Button
-android:id="@+id/buttonLogout"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:text="Log Out"
-android:layout_marginTop="16dp"
-android:backgroundTint="@color/secondaryColor"
-    android:textColor="@android:color/white"
-    android:padding="12dp"
-    android:drawablePadding="8dp"
-    android:drawableStart="@drawable/ic_logout"
-    android:fontFamily="sans-serif-medium" />
-    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonLogout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="Đăng xuất"
+        android:background="@drawable/button_oval"
+        android:textColor="@color/black"
+        android:padding="20dp"
+        android:layout_margin="10dp"
+        android:fontFamily="sans-serif-medium" />
+
+</LinearLayout>

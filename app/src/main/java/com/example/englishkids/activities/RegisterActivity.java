@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -22,6 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etEmail, etPassword;
     private Button btnRegisterUser;
     private FirebaseAuth firebaseAuth;
+    TextView btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +49,18 @@ public class RegisterActivity extends AppCompatActivity {
                 registerUser(email, password);
             }
         });
+
+        btnLogin.setOnClickListener(view -> {
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void bindingView() {
         etEmail = findViewById(R.id.etRegisterUsername);
         etPassword = findViewById(R.id.etRegisterPassword);
         btnRegisterUser = findViewById(R.id.btnRegisterUser);
+        btnLogin = findViewById(R.id.btnLogin);
     }
 
     private void registerUser(String email, String password) {
