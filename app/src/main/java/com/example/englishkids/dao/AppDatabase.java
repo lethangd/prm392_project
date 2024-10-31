@@ -31,4 +31,14 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return instance;
     }
+
+    public void clearAllData() {
+        if (inTransaction()) {
+            vocabularyDao().clearAll();
+            grammarDao().clearAll();
+            lessonDao().clearAll();
+        } else {
+            clearAllTables();
+        }
+    }
 }

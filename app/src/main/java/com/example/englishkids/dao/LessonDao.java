@@ -41,5 +41,11 @@ public interface LessonDao {
             "(SELECT COUNT(*) FROM Grammar WHERE lesson_id = :lessonId)) AS progress")
     int getLessonProgress(int lessonId);
 
+    @Query("UPDATE Lesson SET study_count = :count WHERE study_count < :count And lesson_id = :lessonId")
+    void updateStudyCount(int lessonId, int count);
+
+    @Query("DELETE FROM lesson")
+    void clearAll();
+
 
 }

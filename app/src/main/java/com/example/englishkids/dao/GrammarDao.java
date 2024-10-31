@@ -29,4 +29,14 @@ public interface GrammarDao {
 
     @Query("UPDATE Grammar SET is_learned = 1 WHERE grammar_id = :grammarId")
     void markAsLearned(int grammarId);
+
+    @Query("DELETE FROM grammar")
+    void clearAll();
+
+    @Query("SELECT * FROM Grammar WHERE grammar_id = :grammarId")
+    Grammar getGrammarById(int grammarId);
+    @Query("SELECT COUNT(*) FROM Grammar WHERE lesson_id = :lessonId")
+    int getGrammarCountByLesson(int lessonId);
+
+
 }

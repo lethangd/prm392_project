@@ -13,7 +13,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -232,34 +234,76 @@ public class DummiesData {
     }
 
     private static void syncLearnedDataFromFirestore(AppDatabase db, FirebaseFirestore firestore, String userId) {
-        // Sync learned Vocabulary
         firestore.collection("user").document(userId).collection("learnedVocabulary")
                 .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    for (QueryDocumentSnapshot document : querySnapshot) {
-                        int vocabId = Integer.parseInt(document.getId());
-                        executorService.execute(() -> {
-                            db.vocabularyDao().markAsLearned(vocabId);
-                        });
+                .addOnSuccessListener(vocabSnapshot -> {
+                    firestore.collection("user").document(userId).collection("learnedGrammar")
+                            .get()
+                            .addOnSuccessListener(grammarSnapshot -> {
+                                // Process learned items in separate maps
+                                Map<Integer, Integer> learnedVocabByLesson = new HashMap<>();
+                                Map<Integer, Integer> learnedGrammarByLesson = new HashMap<>();
 
-                    }
-                    Log.d(TAG, "Vocabulary progress synced from Firestore.");
+                                // Process learned vocabulary
+                                for (QueryDocumentSnapshot document : vocabSnapshot) {
+                                    int vocabId = Integer.parseInt(document.getId());
+
+                                    // Run database access on background thread
+                                    executorService.execute(() -> {
+                                        Vocabulary vocab = db.vocabularyDao().getVocabularyById(vocabId);
+                                        if (vocab != null) {
+                                            int lessonId = vocab.getLessonId();
+                                            synchronized (learnedVocabByLesson) {
+                                                learnedVocabByLesson.put(lessonId, learnedVocabByLesson.getOrDefault(lessonId, 0) + 1);
+                                            }
+                                        }
+                                    });
+                                }
+
+                                // Process learned grammar
+                                for (QueryDocumentSnapshot document : grammarSnapshot) {
+                                    int grammarId = Integer.parseInt(document.getId());
+
+                                    // Run database access on background thread
+                                    executorService.execute(() -> {
+                                        Grammar grammar = db.grammarDao().getGrammarById(grammarId);
+                                        if (grammar != null) {
+                                            int lessonId = grammar.getLessonId();
+                                            synchronized (learnedGrammarByLesson) {
+                                                learnedGrammarByLesson.put(lessonId, learnedGrammarByLesson.getOrDefault(lessonId, 0) + 1);
+                                            }
+                                        }
+                                    });
+                                }
+
+                                // After processing all, update studyCount for each lesson
+                                executorService.execute(() -> {
+                                    List<Lesson> allLessons = db.lessonDao().getAllLessons();
+                                    for (Lesson lesson : allLessons) {
+                                        int lessonId = lesson.getLesson_id();
+                                        int totalVocabInLesson = db.vocabularyDao().getVocabularyCountByLesson(lessonId);
+                                        int totalGrammarInLesson = db.grammarDao().getGrammarCountByLesson(lessonId);
+
+                                        int learnedVocabCount = learnedVocabByLesson.getOrDefault(lessonId, 0);
+                                        int learnedGrammarCount = learnedGrammarByLesson.getOrDefault(lessonId, 0);
+
+                                        if (learnedVocabCount == totalVocabInLesson && learnedGrammarCount == totalGrammarInLesson) {
+                                            // All items learned
+                                            db.lessonDao().updateStudyCount(lessonId, 3);
+                                            Log.d(TAG, "Lesson " + lessonId + " studyCount set to 3 (all items learned)");
+                                        } else if (learnedVocabCount > 0 || learnedGrammarCount > 0) {
+                                            // Some items learned
+                                            db.lessonDao().updateStudyCount(lessonId, 2);
+                                            Log.d(TAG, "Lesson " + lessonId + " studyCount set to 2 (some items learned)");
+                                        }
+                                    }
+                                    Log.d(TAG, "Vocabulary and Grammar progress synced from Firestore.");
+                                });
+                            })
+                            .addOnFailureListener(e -> Log.e(TAG, "Error syncing grammar progress", e));
                 })
                 .addOnFailureListener(e -> Log.e(TAG, "Error syncing vocabulary progress", e));
-
-        // Sync learned Grammar
-        firestore.collection("user").document(userId).collection("learnedGrammar")
-                .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    for (QueryDocumentSnapshot document : querySnapshot) {
-                        int grammarId = Integer.parseInt(document.getId());
-                        executorService.execute(() -> {
-                            db.grammarDao().markAsLearned(grammarId);
-                        });
-
-                    }
-                    Log.d(TAG, "Grammar progress synced from Firestore.");
-                })
-                .addOnFailureListener(e -> Log.e(TAG, "Error syncing grammar progress", e));
     }
+
+
 }

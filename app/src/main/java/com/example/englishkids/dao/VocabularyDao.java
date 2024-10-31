@@ -32,4 +32,10 @@ public interface VocabularyDao {
     @Query("SELECT * FROM Vocabulary WHERE vocab_id = :vocabId")
     Vocabulary getVocabularyById(int vocabId);
 
+    @Query("DELETE FROM vocabulary")
+    void clearAll();
+    @Query("SELECT COUNT(*) FROM Vocabulary WHERE lesson_id = :lessonId")
+    int getVocabularyCountByLesson(int lessonId);
+
+
 }
