@@ -41,8 +41,8 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
         // Highlight current user's score
         if (userId.equals(currentUserId)) {
-            holder.userNameTextView.setTextColor(holder.itemView.getContext().getColor(R.color.lightGray));
-            holder.userScoreTextView.setTextColor(holder.itemView.getContext().getColor(R.color.lightGray));
+            holder.userNameTextView.setTextColor(holder.itemView.getContext().getColor(R.color.highlight));
+            holder.userScoreTextView.setTextColor(holder.itemView.getContext().getColor(R.color.highlight));
         }
     }
 
